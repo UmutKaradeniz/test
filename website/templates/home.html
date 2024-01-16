@@ -1,5 +1,12 @@
-{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-    %}
+{% extends "base.html" %} {% block title %}Home{% endblock %} 
+
+{% block navbar_items%}
+<div class="col-6 text-right">
+    <a class="btn btn-dark" id="login" href="/login">Login</a>
+    <a class="btn btn-dark" id="signUp" href="/register_customer">Sign Up</a>
+</div> 
+{% endblock%}
+
+{% block content %}
     <h1 align="center">Home</h1>
-    
-    {% endblock %}
+{% endblock %}

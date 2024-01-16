@@ -14,47 +14,52 @@
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       crossorigin="anonymous"
     />
-
+    
+    <!-- Block to be overwritten by other pages-->
     <title>{% block title %}Home{% endblock %}</title>
   </head>
+
+  <!--Top bar for every page-->
   <body>
     <div class="container-fluid">
       <div class="row bg-light text-dark p-2">
         <div class="col-6">
-          <img src="../static/Lieferspatz-logo.png" alt="Your Image" class="img-fluid" style="max-height: 160px;">
-          <span class="ml-2">Lieferspatz</span>
+          <a href="/" class="navbar-brand text-decoration-none">
+            <img src="../static/Lieferspatz-logo.png" alt="Lieferspatz Logo" class="img-fluid" style="max-height: 160px;">
+            Lieferspatz
+          </a>
         </div>
-
-        <div class="col-6 text-right">
-          <a class="btn btn-dark" id="orders" href="/orders">Orders</a>
-          <a class="btn btn-dark" id="logout" href="/logout">Logout</a>
-
-          <a class="btn btn-dark" id="login" href="/login">Login</a>
-          <a class="btn btn-dark" id="signUp" href="/register_customer">Sign Up</a>
-        </div>
-
+        {% block navbar_items%} {% endblock%}
       </div>
     </div>
 
-    {% with messages = get_flashed_messages(with_categories=true) %} {% if
-      messages %} {% for category, message in messages %} {% if category ==
-      'error' %}
-      <div class="alert alert-danger alter-dismissable fade show" role="alert">
-        {{ message }}
-        <button type="button" class="close" data-dismiss="alert">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      {% else %}
-      <div class="alert alert-success alter-dismissable fade show" role="alert">
-        {{ message }}
-        <button type="button" class="close" data-dismiss="alert">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      {% endif %} {% endfor %} {% endif %} {% endwith %}
-      
+    <!--Catch flash messages from flash to display them nicely using bootstrap classes-->
+    {% with messages = get_flashed_messages(with_categories=true) %} 
+      {% if messages %} 
+        {% for category, message in messages %} 
+          {% if category == 'error' %}
+            <div class="alert alert-danger alter-dismissable fade show" role="alert">
+              {{ message }}
+              <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          {% else %}
+            <div class="alert alert-success alter-dismissable fade show" role="alert">
+              {{ message }}
+              <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          {% endif %} 
+        {% endfor %} 
+      {% endif %} 
+    {% endwith %}
+    
+    <!--Block to be overwritten-->  
     <div class="container">{% block content %} {% endblock %}</div>
+
+    <!--Import bootstrap-->
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
