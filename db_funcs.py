@@ -94,6 +94,23 @@ class DBfuncs:
         except sql.Error as Err:
             print("SQLite Error: ", Err)
             return False
-
-if __name__ == "__main__":
-    DBfuncs.createTables()
+        
+    #user finder
+    def findUser(username):
+        con = sql.connect('database.db')
+        cur = con.cursor() 
+        cur.execute("SELECT * FROM restaurants WHERE res_name=?", (username))
+        user_info = cur.fetchone()
+        if user_info[0] is False:
+            cur.execute("SELECT * FROM customers WHERE username=?", (username))
+            user_info = cur.fetchone()
+            if user_info[0] is False:   
+                print("no match found")
+        con.commit()
+        con.close()
+        return user_info
+    
+# if __name__ == "__main__":
+#     DBfuncs.createTables()
+#     DBfuncs.registerCustomer("Karadeniz2", "Umut", "ABC 6", 47055, "Umut_Karadeniz", 1234554321)
+#     DBfuncs.registerRestaurant("Al-Basha2", "ABC 7", 47055, 123321)
