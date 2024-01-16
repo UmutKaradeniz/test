@@ -7,27 +7,30 @@ class DBfuncs:
         con.execute("PRAGMA foreign_keys = ON")
         cur = con.cursor()
         cur.execute("""CREATE TABLE IF NOT EXISTS customers (
+                id INTEGER PRIMARY KEY autoincrement,
                 surname TEXT NOT NULL,
                 name TEXT NOT NULL,
                 address TEXT NOT NULL,
                 postcode INTEGER NOT NULL,
-                username TEXT PRIMARY KEY,
+                username TEXT UNIQUE NOT NULL,
                 password TEXT NOT NULL                      
             )""")
         cur.execute("""CREATE TABLE IF NOT EXISTS restaurants (
-                res_name TEXT PRIMARY KEY,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                res_name TEXT UNIQUE NOT NULL,
                 address TEXT NOT NULL,
                 postcode INTEGER NOT NULL,
                 password TEXT NOT NULL,
                 picture BLOB                           
             )""")
         cur.execute("""CREATE TABLE IF NOT EXISTS menu_items(
-                res_name TEXT NOT NULL,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                res_id INTEGER NOT NULL,
                 name TEXT NOT NULL,
                 ingredients TEXT NOT NULL, 
                 type TEXT CHECK(TYPE IN('Main', 'Side', 'Desert', 'Drink')) NOT NULL,
                 price INTEGER NOT NULL,
-                FOREIGN KEY(res_name) REFERENCES restaurants(res_name)       
+                FOREIGN KEY(res_id) REFERENCES restaurants(id)       
             )""")
         con.commit()
         con.close()
@@ -40,7 +43,7 @@ class DBfuncs:
         cur.execute("SELECT EXISTS (SELECT * FROM customers WHERE username=?)", (username,))
         result = cur.fetchone()[0]
         if not bool(result):
-            cur.execute("INSERT INTO customers VALUES (?, ?, ?, ?, ?, ?)", (surname, name, address, postcode, username, password))
+            cur.execute("INSERT INTO customers VALUES (?, ?, ?, ?, ?, ?, ?)", (None, surname, name, address, postcode, username, password))
             response = True
         con.commit()
         con.close()
@@ -52,8 +55,8 @@ class DBfuncs:
         cur = con.cursor()
         response = False
         sqlite_insert_blob_query = """ INSERT INTO restaurants
-                                  (res_name, address, postcode, password, picture) VALUES (?, ?, ?, ?, ?)"""
-        data_tuple = (res_name, address, postcode, password, img_path)
+                                  (id, res_name, address, postcode, password, picture) VALUES (?, ?, ?, ?, ?, ?)"""
+        data_tuple = (None, res_name, address, postcode, password, img_path)
         cur.execute("SELECT EXISTS (SELECT * FROM restaurants WHERE res_name=?)", (res_name,))
         result = cur.fetchone()[0]
         if not bool(result):
@@ -82,12 +85,12 @@ class DBfuncs:
         return True if bool(result) == True else False  
     
     #Adding menu item to Restaurant Menu
-    def addNewItem(res_name, name, ingredients, type, price):
+    def addNewItem(res_id, name, ingredients, type, price):
         try:
             con = sql.connect('database.db')
             con.execute("PRAGMA foreign_keys = ON")
             cur = con.cursor() 
-            cur.execute("INSERT INTO menu_items VALUES (?, ?, ?, ?, ?)", (res_name, name, ingredients, type, price))
+            cur.execute("INSERT INTO menu_items VALUES (?, ?, ?, ?, ?, ?)", (None, res_id, name, ingredients, type, price))
             con.commit()
             con.close()
             return True
@@ -114,3 +117,4 @@ class DBfuncs:
 #     DBfuncs.createTables()
 #     DBfuncs.registerCustomer("Karadeniz2", "Umut", "ABC 6", 47055, "Umut_Karadeniz", 1234554321)
 #     DBfuncs.registerRestaurant("Al-Basha2", "ABC 7", 47055, 123321)
+#     DBfuncs.addNewItem(3, "hamburger", "meat", "Main", 20)
