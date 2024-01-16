@@ -1,0 +1,132 @@
+{% extends "base.html" %} {% block title %}Sign Up{% endblock %} {% block
+  content %}
+  <div class="container-fluid">
+    <div class="row bg-light text-dark">
+      <div class="col-6">
+        <form method="POST">
+          <h3 align="center">Sign-up as customer</h3>
+          <div class="form-group">
+            <label for="surname">Surname</label>
+            <input
+              type="text"
+              class="form-control"
+              id="surname"
+              name="surname"
+              placeholder="Enter surname"
+            />
+          </div>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              placeholder="Enter first name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input
+              type="text"
+              class="form-control"
+              id="address"
+              name="address"
+              placeholder="Enter address"
+            />
+          </div>
+          <div class="form-group">
+            <label for="postcode">Postcode</label>
+            <input
+              type="number"
+              max="99999"
+              class="form-control"
+              id="postcode"
+              name="postcode"
+              placeholder="Enter postcode"
+            />
+          </div>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              name="username"
+              placeholder="Enter username"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              placeholder="Enter password"
+            />
+          </div>
+          <br />
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+      <div class="col-6">
+        <form method="POST">
+          <h3 align="center">Sign-up as a Restaurant</h3>
+          <div class="form-group">
+            <label for="res_name">Restaurant Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="res_name"
+              name="res_name"
+              placeholder="Enter Restaurant Name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input
+              type="text"
+              class="form-control"
+              id="address"
+              name="address"
+              placeholder="Enter address"
+            />
+          </div>
+          <div class="form-group">
+            <label for="postcode">Postcode</label>
+            <input
+              type="number"
+              max="99999"
+              class="form-control"
+              id="postcode"
+              name="postcode"
+              placeholder="Enter postcode"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              placeholder="Enter password"
+            />
+          </div>
+          <div class="form-group">
+            <label for="picture">Picture</label>
+            <input 
+              type="file" 
+              class="form-control-file" 
+              id="picture" 
+              accept="image/*">
+            <small class="form-text text-muted">Upload a restaurant picture.</small>
+          </div>
+          <br />
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
