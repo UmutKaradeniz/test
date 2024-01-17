@@ -107,15 +107,15 @@ class DBfuncs:
     def getIDRestaurant(username):
         con = sql.connect('database.db')
         cur = con.cursor() 
-        cur.execute("SELECT id FROM restaurants WHERE res_name=?", (username))
-        id = cur.fetchone()
+        cur.execute("SELECT id FROM restaurants WHERE res_name=?", (username, ))
+        id = cur.fetchone()[0]
         return id
     
     def getIDCustomer(username):
         con = sql.connect('database.db')
         cur = con.cursor() 
-        cur.execute("SELECT id FROM customers WHERE username=?", (username))
-        id = cur.fetchone()
+        cur.execute("SELECT id FROM customers WHERE username=?", (username, ))
+        id = cur.fetchone()[0]
         return id
     
     def addNewPostcode(res_id, postcode):
@@ -138,7 +138,6 @@ class DBfuncs:
                         (SELECT res_id FROM allowed_postcode WHERE postcode 
                         IN (SELECT postcode FROM customers WHERE id = ?))""", (id, ))
         data = cur.fetchall()
-        print(data)
         con.commit()
         con.close()
         return data
@@ -153,5 +152,6 @@ if __name__ == "__main__":
     # DBfuncs.addNewPostcode(3, 12345)
     # DBfuncs.addNewPostcode(1, 23456)
     # DBfuncs.addNewPostcode(2, 23456)
-    DBfuncs.retrieveResData(4)
-    DBfuncs.retrieveResData(3)
+    # DBfuncs.retrieveResData(4)
+    # DBfuncs.retrieveResData(3)
+    # DBfuncs.getIDCustomer("a")
