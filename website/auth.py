@@ -25,7 +25,7 @@ def registerCustomer():
                 flash('Please fill all of the entries of the form correctly.', category = 'error')
             elif DBfuncs.registerCustomer(surname, name, address, postcode, username, password) is not False:
                 flash('Registration successful.', category = 'success')
-                return redirect(url_for(auth.login))
+                return redirect(url_for('auth.login'))
             else:
                 flash('Username already exists. Please choose a different username.', category = 'error')
 
@@ -38,7 +38,7 @@ def registerCustomer():
                 flash('Please fill all of the entries of the form correctly.', category = 'error')
             elif DBfuncs.registerRestaurant(res_name, address, postcode, password) is not False:
                 flash('Registration successful.', category = 'success')
-                return redirect(url_for(auth.login))
+                return redirect(url_for('auth.login'))
             else:
                 flash('Restaurant name already exists. Please choose a different username.', category = 'error')
 
@@ -68,20 +68,30 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
+        global id
         if DBfuncs.loginCustomerCheck(username, password) is not False:
             flash('Logged in as customer.', category = 'success')
-            # login_user(int(username), remember=True)
-            return render_template("customerhome.html")
+            # print(id)
+            id = DBfuncs.getIDCustomer(username)
+            # print(id)
+            return redirect(url_for('auth.customerhome'))
         elif DBfuncs.loginRestaurantCheck(username, password) is not False:
             flash('Logged in as restaurant', category = 'success')
-            # login_user(int(username), remember=True)
+            id = DBfuncs.getIDRestaurant(username)
+            # print(id)
             return render_template("customerhome.html")
         else:
             flash('Please check your username and password', category = 'error')
     return render_template("login.html")
+
+@auth.route('/customerhome', methods = ['GET', 'POST'])
+def customerhome():
+    if request.method == 'GET':
+        #print(id)
+        restaurants = DBfuncs.retrieveResData(4)
+        return render_template("customerhome.html", restaurants = restaurants)
+    return render_template("customerhome.html")
         
-auth.route('/logout')
-@login_required
+@auth.route('/logout')
 def logout():
-    logout_user
-    return redirect(url_for(auth.login))
+    return redirect(url_for('auth.login'))
