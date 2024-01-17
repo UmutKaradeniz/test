@@ -86,6 +86,11 @@ def restauranthome():
         else:
             return redirect(url_for('auth.login'))
         
+    if request.method == 'POST':
+        item_id = request.form["btn"]
+        print(item_id)
+        return redirect(url_for('auth.edit_item', item_id = item_id))
+        
 #function/route for adding new item
 @auth.route('/add_item', methods = ['GET', 'POST'])
 def add_item():
@@ -100,20 +105,28 @@ def add_item():
             flash("Added new item successfully!")
             return redirect(url_for('auth.restauranthome'))
         else:
-            return redirect(url_for('auth.login'))
-        
+            return redirect(url_for('auth.login'))   
     return render_template("addmenuitem.html")
 
+#function/route for adding new item
 @auth.route('/edit_item', methods = ['GET', 'POST'])
 def edit_item():
-    if request.method == 'POST':
-        if 'id' in session:          
-            name = request.form.get('name')
-            description = request.form.get('description')
-            type = request.form.get('type')
-            price = request.form.get('price') 
-            id = DBfuncs
-            DBfuncs.editItem(id, name, description, type, price) 
+    if 'id' in session:
+        item_id=request.args.get('item_id')
+        print(item_id)
+        menu_item = DBfuncs.retrieveMenuItem(item_id)
+        if request.method == "POST":
+            name = request.form.get('itemname')
+            description = request.form.get('itemdesc')
+            type = request.form.get('itemtype')
+            price = request.form.get('itemprice')
+            DBfuncs.editItem(id, name, description, type, price)
+            flash("Edited item successfully!")
+            return redirect(url_for('auth.restauranthome'))
+        else:
+            return render_template("editmenuitem.html", menu_item = menu_item)
+    else:
+        return redirect(url_for('auth.login'))   
 
 @auth.route('/logout')
 def logout():

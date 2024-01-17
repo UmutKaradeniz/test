@@ -59,13 +59,15 @@
         <div class="card mb-3">
             <img src="../static/Lieferspatz-logo.png" class="card-img-top" alt=" food_item.name " style="max-height: 80px; max-width: 80px;">
             <div class="card-body">
-                <h5 class="card-title"> {{ food_item[0] }} </h5>
-                <p class="card-text"><strong>Allergens:</strong>  {{ food_item[1] }} </p>
-                <p class="card-text"><strong>Price:</strong> $ {{ food_item[3] }} </p>
+                <h5 class="card-title"> {{ food_item[1] }} </h5>
+                <p class="card-text"><strong>Allergens:</strong>  {{ food_item[2] }} </p>
+                <p class="card-text"><strong>Price:</strong> $ {{ food_item[4] }} </p>
             </div>
-            <button type="button" class="btn btn-primary btn-sm edit-button float-right" data-toggle="modal" data-target="#editModal">
+          <form method="POST">
+            <button type="submit" class="btn btn-primary btn-sm edit-button float-right" data-toggle="modal" data-target="#editModal" name="btn" value={{ food_item[0] }}>
                 Edit
             </button>
+          </form>
         </div>
     {% endfor %}
     <!-- End Food Category Boxes Loop -->
