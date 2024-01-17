@@ -1,0 +1,19 @@
+{% extends "base.html" %} {% block title %}Customize your restaurant{% endblock %} 
+
+{% block navbar_items%}
+<div class="col-6 text-right">
+    <a class="btn btn-dark" id="settings" href="/restaurant-settings">
+        <div class="d-flex align-items-center">
+            <img src="../static/settings-icon-light.png" alt="Settings Icon" width="20" height="20" class="mr-1">
+            Settings
+        </div>
+    </a>
+
+    <a class="btn btn-dark" id="orders" href="/orderlist">Order List</a>
+    <a class="btn btn-dark" id="logout" href="/logout">Logout</a>
+</div>
+{% endblock%}
+
+{% block content %}
+    <h1 align="center">Home</h1>
+{% endblock %}
