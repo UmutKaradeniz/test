@@ -58,11 +58,12 @@ def login():
         elif DBfuncs.loginRestaurantCheck(username, password) is not False:
             flash('Logged in as restaurant', category = 'success')
             session['id'] = DBfuncs.getIDRestaurant(username)
-            return render_template("customerhome.html")
+            return redirect(url_for('auth.restauranthome'))
         else:
             flash('Please check your username and password', category = 'error')
     return render_template("login.html")
 
+#function/route for custoerm home page
 @auth.route('/customerhome', methods = ['GET', 'POST'])
 def customerhome():
     if request.method == 'GET':
@@ -73,6 +74,17 @@ def customerhome():
         else:
             return redirect(url_for('auth.login'))
     return render_template("customerhome.html")
+
+#function/route for custoerm home page
+@auth.route('/restauranthome', methods = ['GET', 'POST'])
+def restauranthome():
+    if request.method == 'GET':
+        if 'id' in session:
+            id = session['id']
+            menu_items = DBfuncs.retrieveMenuItems(id)
+            return render_template("restauranthome.html", menu_items = menu_items)
+        else:
+            return redirect(url_for('auth.login'))
         
 @auth.route('/logout')
 def logout():

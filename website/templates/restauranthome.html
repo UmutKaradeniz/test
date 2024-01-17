@@ -15,5 +15,68 @@
 {% endblock%}
 
 {% block content %}
-    <h1 align="center">Home</h1>
+<style>
+    .category-box {
+      cursor: pointer;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 10px;
+      width: 200px; 
+      height: 100px; 
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="row">
+
+      <!-- Food Category Boxes Loop (Replace with Jinja loop) -->
+      {% for category in menu_items %}
+  
+        <div class="col-md-4">
+          <div class="category-box">
+            <h4> {{ category[2] }} </h4>
+          </div>
+        </div>
+      {% endfor %}
+      <!-- End Food Category Boxes Loop -->
+      
+      <!-- Default Empty Boxes (Replace with actual number needed) -->
+      {% for i in range(4) %}
+        <div class="col-md-4">
+          <div class="category-box"></div>
+        </div>
+      {% endfor %}
+      <!-- End Default Empty Boxes -->
+
+    </div>
+  </div>
+
+<div class="container mt-4">
+
+    <!-- Food Category Boxes Loop (Replace with Jinja loop) -->
+    {% for food_item in menu_items %}
+        <div class="card mb-3">
+            <img src="../static/Lieferspatz-logo.png" class="card-img-top" alt=" food_item.name " style="max-height: 80px; max-width: 80px;">
+            <div class="card-body">
+                <h5 class="card-title"> {{ food_item[0] }} </h5>
+                <p class="card-text"><strong>Allergens:</strong>  {{ food_item[1] }} </p>
+                <p class="card-text"><strong>Price:</strong> $ {{ food_item[3] }} </p>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm edit-button float-right" data-toggle="modal" data-target="#editModal">
+                Edit
+            </button>
+        </div>
+    {% endfor %}
+    <!-- End Food Category Boxes Loop -->
+
+
+    <!-- Add Food Button -->
+    <div class="card mb-3">
+        <button type="button" class="btn btn-success btn-lg add-food-button" onclick="location.href='/add-food'">
+            +
+        </button>
+    </div>
+
+</div>
 {% endblock %}
