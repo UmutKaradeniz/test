@@ -102,6 +102,29 @@ class DBfuncs:
         except sql.Error as Err:
             print("SQLite Error: ", Err)
             return False
+        
+    #Editing menu item frım Restaurant Menu
+    def editItem(id, name, ingredients, type, price):
+        try:
+            con = sql.connect('database.db')
+            con.execute("PRAGMA foreign_keys = ON")
+            cur = con.cursor() 
+            cur.execute("""UPDATE menu_items SET name = (?), ingredients = (?),
+                        type = (?), price = (?) WHERE id= (?)""", (name, ingredients, type, price, id))
+            con.commit()
+            con.close()
+        except sql.Error as Err:
+            print("SQLite Error: ", Err)
+
+    #Finding menu item ID
+    def getItemID(res_id, name):
+        con = sql.connect('database.db')
+        cur = con.cursor() 
+        cur.execute("SELECT id FROM menu_items WHERE res_id = (?) and name = (?)", (res_id, name))
+        data = cur.fetchone()[0]
+        con.commit()
+        con.close()
+        return data
     
     #returns id from the row of the given username
     def getIDRestaurant(username):
@@ -152,6 +175,7 @@ class DBfuncs:
         con.commit()
         con.close()
         return data
+    
 
 if __name__ == "__main__":
     DBfuncs.createTables()
