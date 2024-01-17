@@ -11,7 +11,7 @@
 <div class="container mt-5">
 
     <!-- Restaurant Boxes Loop (Replace with Jinja loop) -->
-    
+    {% for restaurant in restaurants %}
     <a href="/menu/" class="text-decoration-none text-dark">
       <div class="card mb-3">
         <div class="row no-gutters">
@@ -20,7 +20,7 @@
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h5 class="card-title">Restaurant name</h5>
+              <h5 class="card-title">{{ restaurant[0] }}</h5>
               <p class="card-text">Restaurant description</p>
               <p class="card-text"><small class="text-muted">Opening Hours: 19:00</small></p>
             </div>
@@ -29,6 +29,6 @@
       </div>
     </a>
     <!-- End Restaurant Boxes Loop -->
-
+    {% endfor %}
 </div>
 {% endblock %}
