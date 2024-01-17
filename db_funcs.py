@@ -141,6 +141,17 @@ class DBfuncs:
         con.commit()
         con.close()
         return data
+    
+    def retrieveMenuItems(id):
+        con = sql.connect('database.db')
+        cur = con.cursor()
+        cur.execute("""SELECT name, ingredients, type, price FROM menu_items
+                        WHERE res_id = ?""", (id, ))
+        data = cur.fetchall()
+        print(data)
+        con.commit()
+        con.close()
+        return data
 
 if __name__ == "__main__":
     DBfuncs.createTables()
@@ -155,3 +166,7 @@ if __name__ == "__main__":
     # DBfuncs.retrieveResData(4)
     # DBfuncs.retrieveResData(3)
     # DBfuncs.getIDCustomer("a")
+    # DBfuncs.addNewItem(5, "pizza", "tomato", "Main", 15)
+    # DBfuncs.addNewItem(5, "hamburger", "meat", "Main", 25)
+    # DBfuncs.addNewItem(5, "ice-cream", "vanilla", "Desert", 5)
+    # DBfuncs.retrieveMenuItems(5)
