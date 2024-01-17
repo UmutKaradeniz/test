@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% block title %}Add or remove menu item{% endblock %} 
+
+{% block navbar_items%} {% endblock%}
+
+{% block content %}
+<form method="POST">
+    <h3 align="center">Add or remove a menu item</h3>
+    <div class="form-group">
+        <label for="foodpicture">Food Picture</label>
+        <input 
+          type="file" 
+          class="form-control-file" 
+          id="foodpicture" 
+          accept="image/*">
+        <small class="form-text text-muted">Upload food picture.</small>
+    </div>
+    <div class="form-group">
+      <label for="itemname">Name of the item</label>
+      <input
+        type="text"
+        class="form-control"
+        id="itemname"
+        name="itemname"
+        placeholder="Enter name of the item"
+      />
+    </div>
+    <div class="form-group">
+      <label for="itemdesc">Description</label>
+      <input
+        type="text"
+        class="form-control"
+        id="itemdesc"
+        name="itemdesc"
+        placeholder="Enter item description"
+      />
+    </div>
+    <div class="form-group">
+      <label for="itemtype">Type of item (ex. Main, Side, Drink, etc.)</label>
+      <input
+        type="text"
+        class="form-control"
+        id="itemtype"
+        name="itemtype"
+        placeholder="Enter type of item"
+      />
+    </div>
+    <div class="form-group">
+      <label for="itemprice">Price of item</label>
+      <input
+        type="number"
+        min="0"
+        class="form-control"
+        id="itemprice"
+        name="itemprice"
+        placeholder="Enter item price"
+      />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary" name="btn" value="remove">Remove</button>
+    <button type="submit" class="btn btn-primary" name="btn" value="add">Add</button>
+  </form>
+{% endblock %}

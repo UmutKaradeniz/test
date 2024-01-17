@@ -31,7 +31,7 @@
     <div class="row">
 
       <!-- Food Category Boxes Loop (Replace with Jinja loop) -->
-      {% for category in menu_items %}
+      {% for category in menu_items | unique %}
   
         <div class="col-md-4">
           <div class="category-box">
