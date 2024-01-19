@@ -1,10 +1,10 @@
-{% extends "base.html" %} {% block title %}Add or remove menu item{% endblock %} 
+{% extends "base.html" %} {% block title %}Add menu item{% endblock %} 
 
 {% block navbar_items%} {% endblock%}
 
 {% block content %}
 <form method="POST">
-    <h3 align="center">Add or remove a menu item</h3>
+    <h3 align="center">Add a menu item</h3>
     <div class="form-group">
         <label for="foodpicture">Food Picture</label>
         <input 
@@ -35,15 +35,17 @@
       />
     </div>
     <div class="form-group">
-      <label for="itemtype">Type of item (ex. Main, Side, Drink, etc.)</label>
-      <input
-        type="text"
-        class="form-control"
-        id="itemtype"
-        name="itemtype"
-        placeholder="Enter type of item"
-      />
+      <label for="itemtype">Type of item</label>
+      <div class="input-group">
+        <!-- Item type dropdown -->
+        {% set food_categories = ['Main', 'Side', 'Desert', 'Drink'] %}
+        <select class="custom-select" id="hour1" name="hour1"> 
+          {% for category in food_categories %}
+            <option value="{{ category }}">{{ category }}</option>
+          {% endfor %}
+        </select>
     </div>
+    <br />
     <div class="form-group">
       <label for="itemprice">Price of item</label>
       <input

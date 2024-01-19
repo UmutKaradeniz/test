@@ -27,35 +27,29 @@
     }
 </style>
 
-<div class="container mt-5">
+{% set food_categories = ['Main', 'Side', 'Desert', 'Drink'] %}
+
+<!-- Bootstrap container for responsive layout -->
+<div class="container">
+    <!-- Row to display category boxes -->
     <div class="row">
-
-      <!-- Food Category Boxes Loop (Replace with Jinja loop) -->
-      {% for category in menu_items | unique %}
-  
-        <div class="col-md-4">
-          <div class="category-box">
-            <h4> {{ category[2] }} </h4>
-          </div>
-        </div>
-      {% endfor %}
-      <!-- End Food Category Boxes Loop -->
-      
-      <!-- Default Empty Boxes (Replace with actual number needed) -->
-      {% for i in range(4) %}
-        <div class="col-md-4">
-          <div class="category-box"></div>
-        </div>
-      {% endfor %}
-      <!-- End Default Empty Boxes -->
-
+        <!-- Loop through food categories and create boxes -->
+        {% for category in food_categories %}
+            <div class="col-md-3">
+                <div class="category-box" data-target="{{ category }}">
+                    <h4>{{ category|capitalize }}</h4>
+                </div>
+            </div>
+        {% endfor %}
     </div>
-  </div>
+</div>
 
-<div class="container mt-4">
-
-    <!-- Food Category Boxes Loop (Replace with Jinja loop) -->
-    {% for food_item in menu_items %}
+<!-- Food items sections -->
+{% for category in food_categories %}
+<div id="{{ category }}" class="food-section">
+  <h2 align="center">{{ category }}</h1>
+  {% for food_item in menu_items %}
+    {% if food_item[3] == category %}
         <div class="card mb-3">
             <img src="../static/Lieferspatz-logo.png" class="card-img-top" alt=" food_item.name " style="max-height: 80px; max-width: 80px;">
             <div class="card-body">
@@ -64,21 +58,32 @@
                 <p class="card-text"><strong>Price:</strong> $ {{ food_item[4] }} </p>
             </div>
           <form method="POST">
-            <button type="submit" class="btn btn-primary btn-sm edit-button float-right" data-toggle="modal" data-target="#editModal" name="btn" value={{ food_item[0] }}>
+            <button type="submit" class="btn btn-primary btn-sm edit-button float-right" data-toggle="modal" data-target="#editModal" name="btn" value="{{ food_item[0] }}">
                 Edit
             </button>
           </form>
         </div>
+      {% endif %}
     {% endfor %}
-    <!-- End Food Category Boxes Loop -->
+</div>
+{% endfor %}
 
-
-    <!-- Add Food Button -->
-    <div class="card mb-3">
+<!-- Add Food Button -->
+<div class="card mb-3">
         <button type="button" class="btn btn-success btn-lg add-food-button" onclick="location.href='/add_item'">
             +
         </button>
     </div>
-
 </div>
+
+<script>
+  $(document).ready(function () {
+      $(".category-box").click(function () {
+          var target = $(this).data("target");
+          $('html, body').animate({
+              scrollTop: $("#" + target).offset().top
+          }, 1000);
+      });
+  });
+</script>
 {% endblock %}
