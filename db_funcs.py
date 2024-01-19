@@ -1,4 +1,5 @@
 import sqlite3 as sql
+from datetime import datetime
 
 class DBfuncs:
     #Creating every table that is needed in our website's backend
@@ -164,13 +165,20 @@ class DBfuncs:
     def retrieveResData(id):
         con = sql.connect('database.db')
         cur = con.cursor()
-        cur.execute("""SELECT res_name, address, postcode FROM restaurants WHERE id IN
-                        (SELECT res_id FROM allowed_postcode WHERE postcode 
-                        IN (SELECT postcode FROM customers WHERE id = ?))""", (id, ))
+        current = datetime.now().strftime('%H:%M')
+        cur.execute("SELECT opening, closing FROM restaurants WHERE id=?", (id,))
+        result = cur.fetchone()
+        opening, closing = result
+        status = DBfuncs.is_open(current, opening, closing)
+        cur.execute("""SELECT id, res_name, address, postcode, opening, closing, ? as status FROM restaurants WHERE id IN 
+                    (SELECT res_id FROM allowed_postcode WHERE postcode IN (SELECT postcode FROM customers WHERE id = ?))""", (status, id))
         data = cur.fetchall()
         con.commit()
         con.close()
         return data
+    
+    def is_open(current, opening, closing):
+        return "OPEN" if opening <= current <= closing else "CLOSED"
     
     def retrieveMenuItems(id):
         con = sql.connect('database.db')
