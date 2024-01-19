@@ -1,0 +1,84 @@
+{% extends "base.html" %} {% block title %}Settings{% endblock %} 
+
+{% block navbar_items%} {% endblock%}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Restaurant Hours Selector</h2>
+  
+    <form>
+      <div class="form-row">
+        <!-- Opening Hours -->
+        <div class="form-group col-md-6">
+          <label for="opening-hours">Opening Hours</label>
+          <div class="input-group">
+            <!-- Hours Dropdown -->
+            <select class="custom-select" id="opening-hours-hours">
+              {% for i in range(24) %}
+                <option value="{{ i }}">{{ i }}</option>
+              {% endfor %}
+            </select>
+            <div class="input-group-append">
+              <span class="input-group-text">:</span>
+            </div>
+            <!-- Minutes Dropdown -->
+            <select class="custom-select" id="opening-hours-minutes">
+              {% for i in range(60) %}
+                <option value="{{ i }}">{{ i }}</option>
+              {% endfor %}
+            </select>
+        </div>
+      </div>
+
+      <!-- Closing Hours -->
+      <div class="form-group col-md-6">
+        <label for="closing-hours">Closing Hours</label>
+        <div class="input-group">
+          <!-- Hours Dropdown -->
+          <select class="custom-select" id="closing-hours-hours">
+              {% for i in range(24) %}
+                <option value="{{ i }}">{{ i }}</option>
+              {% endfor %}
+            </select>
+            <div class="input-group-append">
+              <span class="input-group-text">:</span>
+            </div>
+            <!-- Minutes Dropdown -->
+            <select class="custom-select" id="closing-hours-minutes">
+              {% for i in range(60) %}
+                <option value="{{ i }}">{{ i }}</option>
+              {% endfor %}
+            </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Save Button (for potential future use) -->
+    <button type="submit" class="btn btn-primary" name="save">Save Changes</button>
+  </form>
+</div>
+
+<div class="container mt-5">
+
+    <h2>Delivery To:</h2>
+    
+    <form id="integerForm" method="POST">
+        <!-- Use Bootstrap form-group for styling -->
+        <div class="form-group">
+            <label for="integerInput">Enter PLZ:</label>
+            <input type="number" class="form-control" id="integerInput" name="integerInput" pattern="\d{5}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit new PLZ</button>
+    </form>
+
+    <div id="plzList" class="mt-4">
+        <h3>PLZ List:</h3>
+        <!-- Use Bootstrap list-group for styling -->
+        <ul class="list-group" id="listItems">
+            {% for integer in plzList %}
+                <li class="list-group-item">{{ integer }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock%}
