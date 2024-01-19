@@ -21,7 +21,9 @@ class DBfuncs:
                 address TEXT NOT NULL,
                 postcode INTEGER NOT NULL,
                 password TEXT NOT NULL,
-                picture BLOB                          
+                picture BLOB,
+                opening TIME,
+                closing TIME                          
             )""")
         cur.execute("""CREATE TABLE IF NOT EXISTS menu_items(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -190,6 +192,13 @@ class DBfuncs:
         con = sql.connect('database.db')
         cur = con.cursor()
         cur.execute("DELETE FROM menu_items WHERE id =?", (item_id, ))
+        con.commit()
+        con.close()
+
+    def setTime(restaurant_id, open_time, close_time):
+        con = sql.connect('database.db')
+        cur = con.cursor()
+        cur.execute("UPDATE restaurants SET opening = ?, closing = ? WHERE id = ?", (open_time, close_time, restaurant_id))
         con.commit()
         con.close()
     
