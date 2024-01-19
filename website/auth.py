@@ -14,7 +14,6 @@ def homepage():
 def registerCustomer():
     if request.method == 'POST':
         if request.form["btn"] == "customer":
-            print(request.form)
             surname = request.form.get('surname')
             name = request.form.get('name')
             address = request.form.get('address')
@@ -64,36 +63,33 @@ def login():
 #function/route for custoerm home page
 @auth.route('/customerhome', methods = ['GET', 'POST'])
 def customerhome():
-    if request.method == 'GET':
-        if 'id' in session:
+    if 'id' in session:
+        if request.method == 'GET':
             id = session['id']
             restaurants = DBfuncs.retrieveResData(id)
             return render_template("customerhome.html", restaurants = restaurants)
-        else:
-            return redirect(url_for('auth.login'))
-    return render_template("customerhome.html")
+    else:
+        return redirect(url_for('auth.login'))
 
 #function/route for custoerm home page
 @auth.route('/restauranthome', methods = ['GET', 'POST'])
 def restauranthome():
-    if request.method == 'GET':
-        if 'id' in session:
+    if 'id' in session:
+        if request.method == 'GET':
             id = session['id']
             menu_items = DBfuncs.retrieveMenuItems(id)
             return render_template("restauranthome.html", menu_items = menu_items)
-        else:
-            return redirect(url_for('auth.login'))
-        
-    if request.method == 'POST':
-        item_id = request.form["btn"]
-        print(item_id)
-        return redirect(url_for('auth.edit_item', item_id = item_id))
+        if request.method == 'POST':
+            item_id = request.form["btn"]
+            return redirect(url_for('auth.edit_item', item_id = item_id))
+    else:
+        return redirect(url_for('auth.login'))
         
 #function/route for adding new item
 @auth.route('/add_item', methods = ['GET', 'POST'])
 def add_item():
-    if request.method == 'POST':
-        if 'id' in session:
+    if 'id' in session:
+        if request.method == 'POST':
             id = session['id']
             name = request.form.get('itemname')
             description = request.form.get('itemdesc')
@@ -102,16 +98,15 @@ def add_item():
             DBfuncs.addNewItem(id, name, description, type, price)
             flash("Added new item successfully!", category = 'success')
             return redirect(url_for('auth.restauranthome'))
-        else:
-            return redirect(url_for('auth.login'))   
-    return render_template("addmenuitem.html")
-
+        else:  
+            return render_template("addmenuitem.html")
+    else:
+        return redirect(url_for('auth.login')) 
 #function/route for adding new item
 @auth.route('/edit_item', methods = ['GET', 'POST'])
 def edit_item():
     if 'id' in session:
         item_id=request.args.get('item_id')
-        print(item_id)
         menu_item = DBfuncs.retrieveMenuItem(item_id)
         if request.method == "POST":
             if request.form["btn"] == "save":
@@ -136,14 +131,12 @@ def settings():
     if 'id' in session:
         id = session['id']
         plzList = DBfuncs.getPlzList(id)
-        print(plzList)
         if request.method == "POST":
             if request.form["btn"] == "save":
                 hour_open = request.form.get('hour1')
                 minute_open = request.form.get('min1')
                 hour_close = request.form.get('hour2')
                 minute_close = request.form.get('min2')
-                print(hour_open)
                 if hour_open > hour_close:
                     flash("Opening hour cannot be later than Closing hour" , category = 'error')
                     return redirect(url_for('auth.settings'))

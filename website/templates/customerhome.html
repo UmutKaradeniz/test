@@ -12,7 +12,7 @@
 
     <!-- Restaurant Boxes Loop (Replace with Jinja loop) -->
     {% for restaurant in restaurants %}
-    {% if restaurant[6] == 'OPEN' %}
+    {% if restaurant[7] == 'OPEN' %}
     <a href="/menu/" class="text-decoration-none text-dark">
       <div class="card mb-3">
         <div class="row no-gutters">
@@ -23,9 +23,8 @@
             <div class="card-body">
               <h5 class="card-title">{{ restaurant[1] }}</h5>
               <p class="card-text">{{ restaurant[2] }}, {{ restaurant[3] }}</p>
-              <p class="card-text text-success">{{ restaurant[6] }}</p>
-              <p class="card-text"><small class="text-muted">Opening Hours: {{ restaurant[4] }}</small></p>
-              <p class="card-text"><small class="text-muted">Closing Hours: {{ restaurant[5] }}</small></p>
+              <p class="card-text text-success">{{ restaurant[7] }}</p>
+              <p class="card-text"><small class="text-muted">Opening Hours: {{ restaurant[5] }} - {{ restaurant[6] }}</small></p>
             </div>
           </div>
         </div>
@@ -36,7 +35,7 @@
     {% endfor %}
 
     {% for restaurant in restaurants %}
-    {% if restaurant[6] == 'CLOSED' %}
+    {% if restaurant[7] == 'CLOSED' %}
     <a href="/menu/" class="text-decoration-none text-dark">
       <div class="card mb-3">
         <div class="row no-gutters">
@@ -47,9 +46,8 @@
             <div class="card-body">
               <h5 class="card-title">{{ restaurant[1] }}</h5>
               <p class="card-text">{{ restaurant[2] }}, {{ restaurant[3] }}</p>
-              <p class="card-text text-danger">{{ restaurant[6] }}</p>
-              <p class="card-text"><small class="text-muted">Opening Hours: {{ restaurant[4] }}</small></p>
-              <p class="card-text"><small class="text-muted">Closing Hours: {{ restaurant[5] }}</small></p>
+              <p class="card-text text-danger">{{ restaurant[7] }}</p>
+              <p class="card-text"><small class="text-muted">Opening Hours: {{ restaurant[5] }} - {{ restaurant[6] }}</small></p>
             </div>
           </div>
         </div>

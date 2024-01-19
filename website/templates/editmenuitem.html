@@ -38,11 +38,15 @@
       <label for="itemtype">Type of item</label>
       <div class="input-group">
         <!-- Item type dropdown -->
-        {% set food_categories = ['Main', 'Side', 'Desert', 'Drink'] %}
+        {% set food_categories = ['Main', 'Side', 'Dessert', 'Drink'] %}
         <select class="custom-select" id="itemtype" name="itemtype"> 
           {% for category in food_categories %}
-            <option value="{{ category }}">{{ category }}</option>
-          {% endfor %}
+            {% if category == menu_item[3] %}
+              <option value="{{ category }}" selected>{{ category }}</option>
+            {% else %}
+              <option value="{{ category }}">{{ category }}</option>
+            {% endif %}
+          {% endfor %}          
         </select>
     </div>
     <br />

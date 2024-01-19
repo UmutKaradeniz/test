@@ -118,16 +118,6 @@ class DBfuncs:
             con.close()
         except sql.Error as Err:
             print("SQLite Error: ", Err)
-
-    #Finding menu item ID
-    def getItemID(res_id, name):
-        con = sql.connect('database.db')
-        cur = con.cursor() 
-        cur.execute("SELECT id FROM menu_items WHERE res_id = (?) and name = (?)", (res_id, name))
-        data = cur.fetchone()[0]
-        con.commit()
-        con.close()
-        return data
     
     #returns id from the row of the given username
     def getIDRestaurant(username):
@@ -137,6 +127,7 @@ class DBfuncs:
         id = cur.fetchone()[0]
         return id
     
+    #returns id from the row of the given username
     def getIDCustomer(username):
         con = sql.connect('database.db')
         cur = con.cursor() 
@@ -144,6 +135,7 @@ class DBfuncs:
         id = cur.fetchone()[0]
         return id
     
+    #adding new delivery postcode to inputted restaurant
     def addNewPostcode(res_id, postcode):
         try:
             con = sql.connect('database.db')
@@ -161,39 +153,48 @@ class DBfuncs:
         except sql.Error as Err:
             print("SQLite Error: ", Err)
             return False 
-        
+
+    #returns restaurant data for frontend output  
     def retrieveResData(id):
         con = sql.connect('database.db')
         cur = con.cursor()
+        i = 0
         current = datetime.now().strftime('%H:%M')
-        cur.execute("SELECT opening, closing FROM restaurants WHERE id=?", (id,))
-        result = cur.fetchone()
-        opening, closing = result
-        if opening or closing: 
-            status = DBfuncs.is_open(current, opening, closing)
-        else:
-            status = "CLOSED"
-        cur.execute("""SELECT id, res_name, address, postcode, opening, closing, ? as status FROM restaurants WHERE id IN 
-                    (SELECT res_id FROM allowed_postcode WHERE postcode IN (SELECT postcode FROM customers WHERE id = ?))""", (status, id))
-        data = cur.fetchall()
+        cur.execute("SELECT id, res_name, address, postcode, picture, opening, closing FROM restaurants")
+        restaurants = cur.fetchall()
+        for restaurant in restaurants:
+            opening = restaurant[5]
+            closing = restaurant[6]
+            if opening and closing: 
+                status = DBfuncs.is_open(current, opening, closing)        
+            else:
+                status = "CLOSED"
+            temp = list(restaurant)
+            temp.append(status)
+            restaurant = tuple(temp)
+            restaurants[i] = restaurant
+            i = i + 1 
         con.commit()
         con.close()
-        return data
+        print(restaurants)
+        return restaurants
     
+    #checks if computer time is in between opening and closing time
     def is_open(current, opening, closing):
         return "OPEN" if opening <= current <= closing else "CLOSED"
     
+    #returns menu items for frontend output  
     def retrieveMenuItems(id):
         con = sql.connect('database.db')
         cur = con.cursor()
         cur.execute("""SELECT id, name, ingredients, type, price FROM menu_items
                         WHERE res_id = ?""", (id, ))
         data = cur.fetchall()
-        print(data)
         con.commit()
         con.close()
         return data
     
+    #returns menu item for frontend output
     def retrieveMenuItem(item_id):
         con = sql.connect('database.db')
         cur = con.cursor()
@@ -204,6 +205,7 @@ class DBfuncs:
         con.close()
         return data
     
+    #deletes menu item from table
     def deleteMenuItem(item_id):
         con = sql.connect('database.db')
         cur = con.cursor()
@@ -211,6 +213,7 @@ class DBfuncs:
         con.commit()
         con.close()
 
+    #setting opening and closing hours of a restaurant
     def setTime(restaurant_id, open_time, close_time):
         con = sql.connect('database.db')
         cur = con.cursor()
@@ -218,6 +221,7 @@ class DBfuncs:
         con.commit()
         con.close()
 
+    #returns delivery postcodes of a restaurant
     def getPlzList(res_id):
         con = sql.connect('database.db')
         cur = con.cursor()
