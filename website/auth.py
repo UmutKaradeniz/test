@@ -137,23 +137,36 @@ def edit_item():
 def settings():
     if 'id' in session:
         id = session['id']
+        plzList = DBfuncs.getPlzList(id)
+        print(plzList)
         if request.method == "POST":
-            hour_open = request.form.get('hour1')
-            minute_open = request.form.get('min1')
-            hour_close = request.form.get('hour2')
-            minute_close = request.form.get('min2')
-            print(hour_open)
-            if hour_open > hour_close:
-                flash("Opening hour cannot be later than Closing hour" , category = 'error')
-                return render_template("restaurantsettings.html")
-            else:
-                open_time = hour_open + ':' + minute_open
-                close_time = hour_close + ':' + minute_close
-                DBfuncs.setTime(id, open_time, close_time)
-                flash("Time set successfully" , category = 'success')
-                return render_template("restaurantsettings.html")
+            if request.form["btn"] == "save":
+                hour_open = request.form.get('hour1')
+                minute_open = request.form.get('min1')
+                hour_close = request.form.get('hour2')
+                minute_close = request.form.get('min2')
+                print(hour_open)
+                if hour_open > hour_close:
+                    flash("Opening hour cannot be later than Closing hour" , category = 'error')
+                    return redirect(url_for('auth.settings'))
+                else:
+                    open_time = hour_open + ':' + minute_open
+                    close_time = hour_close + ':' + minute_close
+                    DBfuncs.setTime(id, open_time, close_time)
+                    flash("Time set successfully" , category = 'success')
+                    return redirect(url_for('auth.settings'))
+            elif request.form["btn"] == "plz":
+                plz = request.form.get('integerInput')
+                if DBfuncs.addNewPostcode(id, plz) is not False and len(plz) == 5:
+                    flash("Postcode added successfully" , category = 'success')
+                    return redirect(url_for('auth.settings'))
+                else:
+                    flash("This postcode already exists", category = "error")
+                    return redirect(url_for('auth.settings'))
         else:
-            return render_template("restaurantsettings.html")
+            return render_template("restaurantsettings.html", plzList = plzList)
+    else:
+        return redirect(url_for('auth.login'))
 
 @auth.route('/logout')
 def logout():

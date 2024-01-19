@@ -30,7 +30,7 @@ class DBfuncs:
                 res_id INTEGER NOT NULL,
                 name TEXT NOT NULL,
                 ingredients TEXT NOT NULL, 
-                type TEXT CHECK(TYPE IN('Main', 'Side', 'Desert', 'Drink')) NOT NULL,
+                type TEXT CHECK(TYPE IN('Main', 'Side', 'Dessert', 'Drink')) NOT NULL,
                 price INTEGER NOT NULL,
                 FOREIGN KEY(res_id) REFERENCES restaurants(id)       
             )""")
@@ -148,10 +148,15 @@ class DBfuncs:
             con = sql.connect('database.db')
             con.execute("PRAGMA foreign_keys = ON")
             cur = con.cursor() 
-            cur.execute("INSERT INTO allowed_postcode VALUES (?, ?)", (res_id, postcode))
+            response = False
+            cur.execute("SELECT EXISTS (SELECT 1 FROM allowed_postcode WHERE res_id = (?) and postcode = (?)) ", (res_id, postcode))
+            result = cur.fetchone()[0]
+            if not bool(result):
+                cur.execute("INSERT INTO allowed_postcode VALUES (?, ?)", (res_id, postcode))     
+                response = True   
             con.commit()
             con.close()
-            return True
+            return response
         except sql.Error as Err:
             print("SQLite Error: ", Err)
             return False 
@@ -201,6 +206,15 @@ class DBfuncs:
         cur.execute("UPDATE restaurants SET opening = ?, closing = ? WHERE id = ?", (open_time, close_time, restaurant_id))
         con.commit()
         con.close()
+
+    def getPlzList(res_id):
+        con = sql.connect('database.db')
+        cur = con.cursor()
+        cur.execute("SELECT postcode FROM allowed_postcode WHERE res_id = (?)", (res_id, ))
+        data = cur.fetchall()
+        con.commit()
+        con.close()
+        return data
     
 if __name__ == "__main__":
     DBfuncs.createTables()

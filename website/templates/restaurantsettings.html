@@ -54,7 +54,7 @@
     </div>
 
     <!-- Save Button (for potential future use) -->
-    <button type="submit" class="btn btn-primary" name="save">Save Changes</button>
+    <button type="submit" class="btn btn-primary" name="btn" value="save">Save Changes</button>
   </form>
 </div>
 
@@ -68,7 +68,7 @@
             <label for="integerInput">Enter PLZ:</label>
             <input type="number" class="form-control" id="integerInput" name="integerInput" pattern="\d{5}" required>
         </div>
-        <button type="submit" class="btn btn-primary">Submit new PLZ</button>
+        <button type="submit" class="btn btn-primary" name="btn" value="plz">Submit new PLZ</button>
     </form>
 
     <div id="plzList" class="mt-4">
@@ -76,7 +76,7 @@
         <!-- Use Bootstrap list-group for styling -->
         <ul class="list-group" id="listItems">
             {% for integer in plzList %}
-                <li class="list-group-item">{{ integer }}</li>
+                <li class="list-group-item">{{ integer[0] }}</li>
             {% endfor %}
         </ul>
     </div>
