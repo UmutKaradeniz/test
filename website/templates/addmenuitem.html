@@ -38,8 +38,8 @@
       <label for="itemtype">Type of item</label>
       <div class="input-group">
         <!-- Item type dropdown -->
-        {% set food_categories = ['Main', 'Side', 'Desert', 'Drink'] %}
-        <select class="custom-select" id="hour1" name="hour1"> 
+        {% set food_categories = ['Main', 'Side', 'Dessert', 'Drink'] %}
+        <select class="custom-select" id="itemtype" name="itemtype"> 
           {% for category in food_categories %}
             <option value="{{ category }}">{{ category }}</option>
           {% endfor %}

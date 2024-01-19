@@ -169,7 +169,10 @@ class DBfuncs:
         cur.execute("SELECT opening, closing FROM restaurants WHERE id=?", (id,))
         result = cur.fetchone()
         opening, closing = result
-        status = DBfuncs.is_open(current, opening, closing)
+        if opening or closing: 
+            status = DBfuncs.is_open(current, opening, closing)
+        else:
+            status = "CLOSED"
         cur.execute("""SELECT id, res_name, address, postcode, opening, closing, ? as status FROM restaurants WHERE id IN 
                     (SELECT res_id FROM allowed_postcode WHERE postcode IN (SELECT postcode FROM customers WHERE id = ?))""", (status, id))
         data = cur.fetchall()
