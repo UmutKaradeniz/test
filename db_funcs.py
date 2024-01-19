@@ -179,7 +179,7 @@ class DBfuncs:
     def retrieveMenuItem(item_id):
         con = sql.connect('database.db')
         cur = con.cursor()
-        cur.execute("""SELECT name, ingredients, type, price FROM menu_items
+        cur.execute("""SELECT id, name, ingredients, type, price FROM menu_items
                         WHERE id = ?""", (item_id, ))
         data = cur.fetchone()
         con.commit()
