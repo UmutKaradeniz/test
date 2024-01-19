@@ -116,13 +116,18 @@ def edit_item():
         print(item_id)
         menu_item = DBfuncs.retrieveMenuItem(item_id)
         if request.method == "POST":
-            name = request.form.get('itemname')
-            description = request.form.get('itemdesc')
-            type = request.form.get('itemtype')
-            price = request.form.get('itemprice')
-            DBfuncs.editItem(id, name, description, type, price)
-            flash("Edited item successfully!")
-            return redirect(url_for('auth.restauranthome'))
+            if request.form["btn"] == "save":
+                name = request.form.get('itemname')
+                description = request.form.get('itemdesc')
+                type = request.form.get('itemtype')
+                price = request.form.get('itemprice')
+                DBfuncs.editItem(item_id, name, description, type, price)
+                flash("Edited item successfully!")
+                return redirect(url_for('auth.restauranthome'))
+            elif request.form["btn"] == "remove":
+                DBfuncs.deleteMenuItem(item_id)
+                flash("Item removed successfully")
+                return redirect(url_for('auth.restauranthome'))
         else:
             return render_template("editmenuitem.html", menu_item = menu_item)
     else:

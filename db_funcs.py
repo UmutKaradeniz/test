@@ -104,13 +104,13 @@ class DBfuncs:
             return False
         
     #Editing menu item frım Restaurant Menu
-    def editItem(id, name, ingredients, type, price):
+    def editItem(item_id, name, ingredients, type, price):
         try:
             con = sql.connect('database.db')
             con.execute("PRAGMA foreign_keys = ON")
             cur = con.cursor() 
             cur.execute("""UPDATE menu_items SET name = (?), ingredients = (?),
-                        type = (?), price = (?) WHERE id= (?)""", (name, ingredients, type, price, id))
+                        type = (?), price = (?) WHERE id= (?)""", (name, ingredients, type, price, item_id))
             con.commit()
             con.close()
         except sql.Error as Err:
@@ -185,6 +185,13 @@ class DBfuncs:
         con.commit()
         con.close()
         return data
+    
+    def deleteMenuItem(item_id):
+        con = sql.connect('database.db')
+        cur = con.cursor()
+        cur.execute("DELETE FROM menu_items WHERE id =?", (item_id, ))
+        con.commit()
+        con.close()
     
 if __name__ == "__main__":
     DBfuncs.createTables()
