@@ -1,0 +1,79 @@
+{% extends "base.html" %} {% block title %}Customize your restaurant{% endblock %} 
+
+{% block navbar_items%}
+<div class="col-6 text-right">
+    <a class="btn btn-dark" id="shoppingcart" href="/shoppingcart">
+        <div class="d-flex align-items-center">
+            <img src="../static/default-food-picture.png" alt="Shopping Cart Icon" width="20" height="20" class="mr-1">
+            Shopping Cart
+        </div>
+    </a>
+    <a class="btn btn-dark" id="logout" href="/logout">Logout</a>
+</div>
+{% endblock%}
+
+{% block content %}
+<style>
+    .category-box {
+      cursor: pointer;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 10px;
+      width: 200px; 
+      height: 100px; 
+    }
+</style>
+
+{% set food_categories = ['Main', 'Side', 'Desert', 'Drink'] %}
+
+<!-- Bootstrap container for responsive layout -->
+<div class="container">
+    <!-- Row to display category boxes -->
+    <div class="row">
+        <!-- Loop through food categories and create boxes -->
+        {% for category in food_categories %}
+            <div class="col-md-3">
+                <div class="category-box" data-target="{{ category }}">
+                    <h4>{{ category|capitalize }}</h4>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Food items sections -->
+{% for category in food_categories %}
+<div id="{{ category }}" class="food-section">
+  <h2 align="center">{{ category }}</h1>
+  {% for food_item in menu_items %}
+    {% if food_item[3] == category %}
+        <div class="card mb-3">
+            <img src="../static/Lieferspatz-logo.png" class="card-img-top" alt=" food_item.name " style="max-height: 80px; max-width: 80px;">
+            <div class="card-body">
+                <h5 class="card-title"> {{ food_item[1] }} </h5>
+                <p class="card-text"><strong>Allergens:</strong>  {{ food_item[2] }} </p>
+                <p class="card-text"><strong>Price:</strong> $ {{ food_item[4] }} </p>
+            </div>
+          <form method="POST">
+            <button type="submit" class="btn btn-success btn-sm add-to-cart-button" data-toggle="modal" data-target="#editModal" name="btn" value="{{ food_item[0] }}">
+                +
+            </button>
+          </form>
+        </div>
+      {% endif %}
+    {% endfor %}
+</div>
+{% endfor %}
+
+<script>
+  $(document).ready(function () {
+      $(".category-box").click(function () {
+          var target = $(this).data("target");
+          $('html, body').animate({
+              scrollTop: $("#" + target).offset().top
+          }, 1000);
+      });
+  });
+</script>
+{% endblock %}
