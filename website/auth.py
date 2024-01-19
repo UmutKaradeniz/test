@@ -28,8 +28,7 @@ def registerCustomer():
                 return redirect(url_for('auth.login'))
             else:
                 flash('Username already exists. Please choose a different username.', category = 'error')
-
-        if request.form["btn"] == "restaurant":            
+        elif request.form["btn"] == "restaurant":            
             res_name = request.form.get('res_name')
             address = request.form.get('address')
             postcode = request.form.get('postcode')
