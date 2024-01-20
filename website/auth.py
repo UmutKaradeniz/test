@@ -85,7 +85,7 @@ def menu():
         menu_items = DBfuncs.retrieveMenuItems(res_id)
         if request.method == 'POST':
             item_id = request.form["btn"]
-            if item_id in session['cart']:
+            if item_id in session['cart'][1:]:
                 flash("This item is already in shopping cart. In order to change quantity please go tou your shopping cart.", category = "error")
                 return render_template("orderfood.html", menu_items = menu_items)
             else:
