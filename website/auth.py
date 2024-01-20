@@ -53,7 +53,6 @@ def login():
             flash('Logged in as customer.', category = 'success')
             session['id'] = (DBfuncs.getIDCustomer(username))
             session['cart'] = []
-            session.modified = True
             return redirect(url_for('auth.customerhome'))
         elif DBfuncs.loginRestaurantCheck(username, password) is not False:
             flash('Logged in as restaurant', category = 'success')
@@ -73,7 +72,20 @@ def customerhome():
             return render_template("customerhome.html", restaurants = restaurants)
         if request.method == 'POST':
             res_id = request.form["btn"]
-            session['cart'].append(res_id)
+            if len(session['cart']) != 0:
+                if session['cart'][0] == res_id:
+                    pass
+                else:
+                    print(session['cart'])
+                    session.pop("cart", default = None)
+                    flash("Shopping cart has been reset.", category = 'error')
+                    session['cart'] = []
+                    session['cart'].append(res_id)
+                    session.modified = True
+                    print(session['cart'])
+            else:
+                session['cart'].append(res_id)
+                session.modified = True
             return redirect(url_for('auth.menu', res_id = res_id))
     else:
         return redirect(url_for('auth.login'))
@@ -85,11 +97,12 @@ def menu():
         menu_items = DBfuncs.retrieveMenuItems(res_id)
         if request.method == 'POST':
             item_id = request.form["btn"]
-            if item_id in session['cart']:
+            if item_id in session['cart'][1:]:
                 flash("This item is already in shopping cart. In order to change quantity please go tou your shopping cart.", category = "error")
                 return render_template("orderfood.html", menu_items = menu_items)
             else:
                 session['cart'].append(item_id)
+                session.modified = True
                 flash("Item Added to the Cart", category = 'success')
                 return render_template("orderfood.html", menu_items = menu_items)
         else:
@@ -103,18 +116,26 @@ def shopping_cart():
         menu_items= []
         id = session['id']
         total = 0
-        print(session['cart'])
         for item_id in session['cart'][1:]:
             menu_items.append(DBfuncs.retrieveMenuItem(item_id))
         for price in menu_items:
             total = total + price[4]
         user_info = DBfuncs.retrieveCusData(id)
         if request.method == 'POST':
-            time = datetime.now().strftime('%H:%M')
+            order = ""
+            i = 0
+            time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             res_id = session['cart'][0]
             res_name = DBfuncs.getResName(res_id)
             cus_id = session['id']
             cus_name, cus_surname, cus_address = DBfuncs.getCusNameAddress(cus_id)
+            for key, value in request.form.items():
+                if "quantity" in key:
+                    order = order + str(menu_items[i][1]) + ' x' + str(value) + "\n"
+                    i = i + 1
+                if "comment" in key:
+                    comment = value
+            DBfuncs.addNewOrder(time, res_id, res_name, cus_id, cus_name, cus_surname, cus_address, order, comment)
             return render_template("shoppingcart.html", menu_items = menu_items, user_info = user_info, total = total)
         else:
             return render_template("shoppingcart.html", menu_items = menu_items, user_info = user_info, total = total)
@@ -153,6 +174,7 @@ def add_item():
             return render_template("addmenuitem.html")
     else:
         return redirect(url_for('auth.login')) 
+    
 #function/route for adding new item
 @auth.route('/edit_item', methods = ['GET', 'POST'])
 def edit_item():
@@ -212,5 +234,6 @@ def settings():
 
 @auth.route('/logout')
 def logout():
-    session.pop("id", None)
+    session.pop("id", default = None)
+    session.pop("cart", default = None)
     return redirect(url_for('auth.login'))

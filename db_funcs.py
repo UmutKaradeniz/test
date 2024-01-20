@@ -40,6 +40,21 @@ class DBfuncs:
                 postcode INTEGER NOT NULL,  
                 FOREIGN KEY(res_id) REFERENCES restaurants(id)               
             )""")
+        cur.execute("""CREATE TABLE IF NOT EXISTS orders(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                date_Time DATETIME NOT NULL,
+                res_id INTEGER NOT NULL,
+                res_Name TEXT NOT NULL,
+                cus_id INTEGER NOT NULL,
+                cus_Name TEXT NOT NULL,
+                cus_Surname TEXT NOT NULL,
+                cus_Address TEXT NOT NULL,  
+                order_info TEXT NOT NULL,
+                comment TEXT, 
+                status TEXT,
+                FOREIGN KEY(cus_id) REFERENCES customers(id),
+                FOREIGN KEY(res_id) REFERENCES restaurants(id)       
+            )""")
         con.commit()
         con.close()
 
@@ -246,12 +261,12 @@ class DBfuncs:
         con = sql.connect('database.db')
         cur = con.cursor()
         cur.execute("SELECT res_name FROM restaurants WHERE id =(?)", (res_id, ))
-        data = cur.fetchone()
+        data = cur.fetchone()[0]
         con.commit()
         con.close()
         return data
     
-        #returns customer name with given id
+    #returns customer name with given id
     def getCusNameAddress(cus_id):
         con = sql.connect('database.db')
         cur = con.cursor()
@@ -260,6 +275,18 @@ class DBfuncs:
         con.commit()
         con.close()
         return data
+    
+    #creates a new order
+    def addNewOrder(time, res_id, res_name, cus_id, cus_name, cus_surname, cus_address, order, comment):
+        try:
+            con = sql.connect('database.db')
+            con.execute("PRAGMA foreign_keys = ON")
+            cur = con.cursor() 
+            cur.execute("INSERT INTO orders VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (None, time, res_id, res_name, cus_id, cus_name, cus_surname, cus_address, order, comment, None))  
+            con.commit()
+            con.close()
+        except sql.Error as Err:
+            print("SQLite Error: ", Err)
     
 if __name__ == "__main__":
     DBfuncs.createTables()
