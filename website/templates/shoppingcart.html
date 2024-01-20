@@ -1,0 +1,61 @@
+{% extends "base.html" %} {% block title %} Order Food at Lieferspatz {% endblock %} 
+
+{% block logo %}
+<a href="/customerhome" class="navbar-brand text-decoration-none">
+  <img src="../static/Lieferspatz-logo.png" alt="Lieferspatz Logo" class="img-fluid" style="max-height: 160px;">
+  Lieferspatz
+</a>
+{% endblock %}
+
+{% block navbar_items %} {% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <form method="POST">
+        <div class="row">
+            <!-- First Column: Order List and Total Price -->
+            <div class="col-md-8">
+                <h2>List of Selected Items</h2>
+                <!-- Sample Food Item (Replace this with Jinja loop) -->
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="../static/default-food-picture.png" alt="Food Image" class="img-fluid">
+                            </div>
+                            <div class="col-md-6">
+                                <h5 class="card-title">Food Name</h5>
+                                <p class="card-text">Price: $10.00</p>
+                                <input type="text" class="form-control mb-2" placeholder="Add Comment" id="comment" name="comment">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="quantity">Quantity:</label>
+                                <input type="number" class="form-control text-center" id="quantity" value="1" min="1">
+                                <button class="btn btn-outline-danger mt-2" type="submit" id="deleteBtn" name="btn" value="delete">Delete Item</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of Sample Food Item -->
+
+                <!-- Repeat the above card for each food item using Jinja -->
+
+                <div class="mt-4">
+                    <p>TOTAL PRICE: $0.00</p>
+                </div>
+            </div>
+
+            <!-- Second Column: User Info -->
+            <div class="col-md-4">
+                <h2>Customer Information</h2>
+                <p class="mt-4">Name: John</p>
+                <p>Surname: Doe</p>
+                <p>Address: 1234 Main St</p>
+
+                <!-- Confirm Order Button -->
+                <button type="submit" class="btn btn-success mt-3" name="btn" value="confirm">CONFIRM ORDER</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
