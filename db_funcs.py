@@ -179,6 +179,16 @@ class DBfuncs:
         con.close()
         return restaurants
     
+    #returns costumer data for frontend output
+    def retrieveCusData(id):
+        con = sql.connect('database.db')
+        cur = con.cursor()
+        cur.execute("SELECT id, surname, name, address, postcode FROM customers WHERE id = (?)", (id, ))
+        customer = cur.fetchone()
+        con.commit()
+        con.close()
+        return customer
+    
     #checks if computer time is in between opening and closing time
     def is_open(current, opening, closing):
         return "OPEN" if opening <= current <= closing else "CLOSED"

@@ -17,7 +17,6 @@
             <div class="col-md-8">
                 <h2>List of Selected Items</h2>
                 <!-- Sample Food Item (Replace this with Jinja loop) -->
-                {% total = 0 %}
                 {% for item in menu_items %}
                 <div class="card mt-3">
                     <div class="card-body">
@@ -26,14 +25,21 @@
                                 <img src="../static/default-food-picture.png" alt="Food Image" class="img-fluid">
                             </div>
                             <div class="col-md-6">
-                                <h5 class="card-title">{{ menu_items[1] }}</h5>
-                                <p class="card-text">{{ menu_items[4] }}</p>
-                                {% total = total + menu_items[4] %}
+                                <h5 class="card-title">{{ item[1] }}</h5>
+                                <p class="card-text">price: ${{ item[4] }}</p>
                                 <input type="text" class="form-control mb-2" placeholder="Add Comment" id="comment" name="comment">
                             </div>
                             <div class="col-md-3">
                                 <label for="quantity">Quantity:</label>
-                                <input type="number" class="form-control text-center" id="quantity" value="1" min="1">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <button class="btn btn-outline-secondary" type="button" id="minusBtn">-</button>
+                                    </div>
+                                    <input type="text" class="form-control text-center" id="quantity" value="1" min="1">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" id="plusBtn">+</button>
+                                    </div>
+                                </div>
                                 <button class="btn btn-outline-danger mt-2" type="submit" id="deleteBtn" name="btn" value="delete">Delete Item</button>
                             </div>
                         </div>
@@ -52,9 +58,9 @@
             <!-- Second Column: User Info -->
             <div class="col-md-4">
                 <h2>Customer Information</h2>
-                <p class="mt-4">Name: John</p>
-                <p>Surname: Doe</p>
-                <p>Address: 1234 Main St</p>
+                <p class="mt-4">Name: {{ user_info[2] }}</p>
+                <p>Surname: {{ user_info[2] }}</p>
+                <p>Address: {{ user_info[3] }}, {{ user_info[4] }} </p>
 
                 <!-- Confirm Order Button -->
                 <button type="submit" class="btn btn-success mt-3" name="btn" value="confirm">CONFIRM ORDER</button>

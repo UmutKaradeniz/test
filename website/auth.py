@@ -70,6 +70,9 @@ def customerhome():
             id = session['id']
             restaurants = DBfuncs.retrieveResData(id)
             return render_template("customerhome.html", restaurants = restaurants)
+        if request.method == 'POST':
+            res_id = request.form["btn"]
+            return redirect(url_for('auth.menu', res_id = res_id))
     else:
         return redirect(url_for('auth.login'))
     
@@ -92,12 +95,17 @@ def menu():
 def shopping_cart():
     if 'id' in session:
         menu_items= []
-        for id in session['cart']:
-            menu_items.append(DBfuncs.retrieveMenuItem(id))
+        id = session['id']
+        total = 0
+        for item_id in session['cart']:
+            menu_items.append(DBfuncs.retrieveMenuItem(item_id))
+        for price in menu_items:
+            total = total + price[4]
+        user_info = DBfuncs.retrieveCusData(id)
         if request.method == 'POST':
             pass
         else:
-            return render_template("shoppingcart.html", menu_items = menu_items)
+            return render_template("shoppingcart.html", menu_items = menu_items, user_info = user_info, total = total)
     else:
         return redirect(url_for('auth.login'))
 
