@@ -68,8 +68,21 @@ def customerhome():
             id = session['id']
             restaurants = DBfuncs.retrieveResData(id)
             return render_template("customerhome.html", restaurants = restaurants)
+        if request.method == 'POST':
+            res_id = request.form["btn"]
+            return redirect(url_for('auth.menu', res_id = res_id))
     else:
         return redirect(url_for('auth.login'))
+    
+@auth.route('/menu')
+def menu():
+    if 'id' in session:
+        res_id = request.args.get('res_id')
+        menu_items = DBfuncs.retrieveMenuItems(res_id)
+        return render_template("orderfood.html", menu_items = menu_items)
+    else:
+        return redirect(url_for('auth.login'))
+
 
 #function/route for custoerm home page
 @auth.route('/restauranthome', methods = ['GET', 'POST'])

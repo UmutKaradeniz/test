@@ -20,11 +20,11 @@
     <!-- Restaurant Boxes Loop (Replace with Jinja loop) -->
     {% for restaurant in restaurants %}
     {% if restaurant[7] == 'OPEN' %}
-    <a href="/menu/" class="text-decoration-none text-dark">
-      <div class="card mb-3">
+    <form method="POST" class="text-decoration-none text-dark">
+      <button class="card mb-3" name="btn" value="{{ restaurant[0] }}">
         <div class="row no-gutters">
           <div class="col-md-4">
-            <img src="../static/Lieferspatz-logo.png" alt="Restaurant Name" class="img-fluid" style="max-height: 140px;">
+            <img src="../static/default-restaurant-picture.png" alt="Restaurant Name" class="img-fluid" style="max-height: 140px;">
           </div>
           <div class="col-md-8">
             <div class="card-body">
@@ -35,19 +35,19 @@
             </div>
           </div>
         </div>
-      </div>
-    </a>
+      </button>
+    </form>
     <!-- End Restaurant Boxes Loop -->
     {% endif %}
     {% endfor %}
 
     {% for restaurant in restaurants %}
     {% if restaurant[7] == 'CLOSED' %}
-    <a href="/menu/" class="text-decoration-none text-dark">
-      <div class="card mb-3">
+    <form method="POST" class="text-decoration-none text-dark">
+      <button class="card mb-3" name="btn" value="{{ restaurant[0] }}">
         <div class="row no-gutters">
           <div class="col-md-4">
-            <img src="../static/Lieferspatz-logo.png" alt="Restaurant Name" class="img-fluid" style="max-height: 140px;">
+            <img src="../static/default-restaurant-picture.png" alt="Restaurant Name" class="img-fluid" style="max-height: 140px;">
           </div>
           <div class="col-md-8">
             <div class="card-body">
@@ -58,8 +58,8 @@
             </div>
           </div>
         </div>
-      </div>
-    </a>
+      </button>
+    </form>
     <!-- End Restaurant Boxes Loop -->
     {% endif %}
     {% endfor %}
