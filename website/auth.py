@@ -50,7 +50,9 @@ def login():
         password = request.form.get('password')
         if DBfuncs.loginCustomerCheck(username, password) is not False:
             flash('Logged in as customer.', category = 'success')
-            session['id'] = DBfuncs.getIDCustomer(username)
+            session['id'] = (DBfuncs.getIDCustomer(username))
+            session['cart'] = []
+            session.modified = True
             return redirect(url_for('auth.customerhome'))
         elif DBfuncs.loginRestaurantCheck(username, password) is not False:
             flash('Logged in as restaurant', category = 'success')
@@ -70,6 +72,35 @@ def customerhome():
             return render_template("customerhome.html", restaurants = restaurants)
     else:
         return redirect(url_for('auth.login'))
+    
+@auth.route('/menu', methods = ['GET', 'POST'])
+def menu():
+    if 'id' in session:
+        res_id = request.args.get('res_id')
+        menu_items = DBfuncs.retrieveMenuItems(res_id)
+        if request.method == 'POST':
+            item_id = request.form["btn"]
+            session['cart'].append(item_id)
+            flash("Item Added to the Cart", category = 'success')
+            return render_template("orderfood.html", menu_items = menu_items)
+        else:
+            return render_template("orderfood.html", menu_items = menu_items)
+    else:
+        return redirect(url_for('auth.login'))
+    
+@auth.route('/shopping_cart', methods = ['GET', 'POST'])
+def shopping_cart():
+    if 'id' in session:
+        menu_items= []
+        for id in session['cart']:
+            menu_items.append(DBfuncs.retrieveMenuItem(id))
+        if request.method == 'POST':
+            pass
+        else:
+            return render_template("shoppingcart.html", menu_items = menu_items)
+    else:
+        return redirect(url_for('auth.login'))
+
 
 #function/route for custoerm home page
 @auth.route('/restauranthome', methods = ['GET', 'POST'])
