@@ -160,7 +160,8 @@ class DBfuncs:
         cur = con.cursor()
         i = 0
         current = datetime.now().strftime('%H:%M')
-        cur.execute("SELECT id, res_name, address, postcode, picture, opening, closing FROM restaurants")
+        cur.execute("""SELECT id, res_name, address, postcode, picture, opening, closing FROM restaurants WHERE id IN
+                    (SELECT res_id FROM allowed_postcode WHERE postcode IN (SELECT postcode FROM customers WHERE id =(?)))""", (id, ))
         restaurants = cur.fetchall()
         for restaurant in restaurants:
             opening = restaurant[5]
@@ -176,7 +177,6 @@ class DBfuncs:
             i = i + 1 
         con.commit()
         con.close()
-        print(restaurants)
         return restaurants
     
     #checks if computer time is in between opening and closing time
