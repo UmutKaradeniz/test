@@ -70,9 +70,6 @@ def customerhome():
             id = session['id']
             restaurants = DBfuncs.retrieveResData(id)
             return render_template("customerhome.html", restaurants = restaurants)
-        if request.method == 'POST':
-            res_id = request.form["btn"]
-            return redirect(url_for('auth.menu', res_id = res_id))
     else:
         return redirect(url_for('auth.login'))
     
@@ -100,7 +97,7 @@ def shopping_cart():
         if request.method == 'POST':
             pass
         else:
-            return render_template("cart.html", menu_items = menu_items)
+            return render_template("shoppingcart.html", menu_items = menu_items)
     else:
         return redirect(url_for('auth.login'))
 

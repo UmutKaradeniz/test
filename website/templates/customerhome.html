@@ -21,10 +21,10 @@
     {% for restaurant in restaurants %}
     {% if restaurant[7] == 'OPEN' %}
     <form method="POST" class="text-decoration-none text-dark">
-      <button class="card mb-3" name="btn" value="{{ restaurant[0] }}">
+      <button class="card mb-3" name="btn" value="{{ restaurant[0] }}" style="width: 100%; height: 50%;">
         <div class="row no-gutters">
           <div class="col-md-4">
-            <img src="../static/default-restaurant-picture.png" alt="Restaurant Name" class="img-fluid" style="max-height: 140px;">
+            <img src="../static/Lieferspatz-logo.png" alt="Restaurant Name" class="img-fluid" style="max-height: 140px;">
           </div>
           <div class="col-md-8">
             <div class="card-body">
@@ -43,11 +43,11 @@
 
     {% for restaurant in restaurants %}
     {% if restaurant[7] == 'CLOSED' %}
-    <form method="POST" class="text-decoration-none text-dark">
-      <button class="card mb-3" name="btn" value="{{ restaurant[0] }}">
+    <a href="/menu/" class="text-decoration-none text-dark">
+      <div class="card mb-3">
         <div class="row no-gutters">
           <div class="col-md-4">
-            <img src="../static/default-restaurant-picture.png" alt="Restaurant Name" class="img-fluid" style="max-height: 140px;">
+            <img src="../static/Lieferspatz-logo.png" alt="Restaurant Name" class="img-fluid" style="max-height: 140px;">
           </div>
           <div class="col-md-8">
             <div class="card-body">
