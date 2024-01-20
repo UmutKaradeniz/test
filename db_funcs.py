@@ -179,6 +179,16 @@ class DBfuncs:
         con.close()
         return restaurants
     
+    #returns costumer data for frontend output
+    def retrieveCusData(id):
+        con = sql.connect('database.db')
+        cur = con.cursor()
+        cur.execute("SELECT id, surname, name, address, postcode FROM customers WHERE id = (?)", (id, ))
+        customer = cur.fetchone()
+        con.commit()
+        con.close()
+        return customer
+    
     #checks if computer time is in between opening and closing time
     def is_open(current, opening, closing):
         return "OPEN" if opening <= current <= closing else "CLOSED"
@@ -227,6 +237,26 @@ class DBfuncs:
         cur = con.cursor()
         cur.execute("SELECT postcode FROM allowed_postcode WHERE res_id = (?)", (res_id, ))
         data = cur.fetchall()
+        con.commit()
+        con.close()
+        return data
+    
+    #returns restaurant name with given id
+    def getResName(res_id):
+        con = sql.connect('database.db')
+        cur = con.cursor()
+        cur.execute("SELECT res_name FROM restaurants WHERE id =(?)", (res_id, ))
+        data = cur.fetchone()
+        con.commit()
+        con.close()
+        return data
+    
+        #returns customer name with given id
+    def getCusNameAddress(cus_id):
+        con = sql.connect('database.db')
+        cur = con.cursor()
+        cur.execute("SELECT name, surname, address FROM customers WHERE id =(?)", (cus_id, ))
+        data = cur.fetchone()
         con.commit()
         con.close()
         return data

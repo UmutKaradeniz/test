@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from db_funcs import *
 from flask import session 
+from datetime import datetime
 
 auth = Blueprint('auth', __name__)
 
@@ -50,7 +51,9 @@ def login():
         password = request.form.get('password')
         if DBfuncs.loginCustomerCheck(username, password) is not False:
             flash('Logged in as customer.', category = 'success')
-            session['id'] = DBfuncs.getIDCustomer(username)
+            session['id'] = (DBfuncs.getIDCustomer(username))
+            session['cart'] = []
+            session.modified = True
             return redirect(url_for('auth.customerhome'))
         elif DBfuncs.loginRestaurantCheck(username, password) is not False:
             flash('Logged in as restaurant', category = 'success')
@@ -65,11 +68,59 @@ def login():
 def customerhome():
     if 'id' in session:
         if request.method == 'GET':
-            id = session['id']
-            restaurants = DBfuncs.retrieveResData(id)
+            cus_id = session['id']
+            restaurants = DBfuncs.retrieveResData(cus_id)
             return render_template("customerhome.html", restaurants = restaurants)
+        if request.method == 'POST':
+            res_id = request.form["btn"]
+            session['cart'].append(res_id)
+            return redirect(url_for('auth.menu', res_id = res_id))
     else:
         return redirect(url_for('auth.login'))
+    
+@auth.route('/menu', methods = ['GET', 'POST'])
+def menu():
+    if 'id' in session:
+        res_id = request.args.get('res_id')
+        menu_items = DBfuncs.retrieveMenuItems(res_id)
+        if request.method == 'POST':
+            item_id = request.form["btn"]
+            if item_id in session['cart'][1:]:
+                flash("This item is already in shopping cart. In order to change quantity please go tou your shopping cart.", category = "error")
+                return render_template("orderfood.html", menu_items = menu_items)
+            else:
+                session['cart'].append(item_id)
+                flash("Item Added to the Cart", category = 'success')
+                return render_template("orderfood.html", menu_items = menu_items)
+        else:
+            return render_template("orderfood.html", menu_items = menu_items)
+    else:
+        return redirect(url_for('auth.login'))
+    
+@auth.route('/shopping_cart', methods = ['GET', 'POST'])
+def shopping_cart():
+    if 'id' in session:
+        menu_items= []
+        id = session['id']
+        total = 0
+        print(session['cart'])
+        for item_id in session['cart'][1:]:
+            menu_items.append(DBfuncs.retrieveMenuItem(item_id))
+        for price in menu_items:
+            total = total + price[4]
+        user_info = DBfuncs.retrieveCusData(id)
+        if request.method == 'POST':
+            time = datetime.now().strftime('%H:%M')
+            res_id = session['cart'][0]
+            res_name = DBfuncs.getResName(res_id)
+            cus_id = session['id']
+            cus_name, cus_surname, cus_address = DBfuncs.getCusNameAddress(cus_id)
+            return render_template("shoppingcart.html", menu_items = menu_items, user_info = user_info, total = total)
+        else:
+            return render_template("shoppingcart.html", menu_items = menu_items, user_info = user_info, total = total)
+    else:
+        return redirect(url_for('auth.login'))
+
 
 #function/route for custoerm home page
 @auth.route('/restauranthome', methods = ['GET', 'POST'])
