@@ -241,6 +241,26 @@ class DBfuncs:
         con.close()
         return data
     
+    #returns restaurant name with given id
+    def getResName(res_id):
+        con = sql.connect('database.db')
+        cur = con.cursor()
+        cur.execute("SELECT res_name FROM restaurants WHERE id =(?)", (res_id, ))
+        data = cur.fetchone()
+        con.commit()
+        con.close()
+        return data
+    
+        #returns customer name with given id
+    def getCusNameAddress(cus_id):
+        con = sql.connect('database.db')
+        cur = con.cursor()
+        cur.execute("SELECT name, surname, address FROM customers WHERE id =(?)", (cus_id, ))
+        data = cur.fetchone()
+        con.commit()
+        con.close()
+        return data
+    
 if __name__ == "__main__":
     DBfuncs.createTables()
     # DBfuncs.registerCustomer("Karadeniz2", "Umut", "ABC 6", 47055, "Umut_Karadeniz", 1234554321)
