@@ -43,7 +43,7 @@
         <!-- Loop through food categories and create boxes -->
         {% for category in food_categories %}
             <div class="col-md-3">
-                <div class="category-box" data-target="{{ category }}">
+                <div class="category-box" onClick="document.getElementById('{{ category }}').scrollIntoView();">
                     <h4>{{ category|capitalize }}</h4>
                 </div>
             </div>
