@@ -32,7 +32,7 @@
                             <div class="col-md-3">
                                 <label for="quantity">Quantity:</label>
                                 <input type="number" class="form-control text-center quantity-input" id="quantity" name="quantity {{ item[0] }}" value="1" min="1" data-item-value="{{ item[4] }}">
-                                <button class="btn btn-outline-danger mt-2" type="submit" id="deleteBtn" name="btn" value="delete">Delete Item</button>
+                                <button class="btn btn-outline-danger mt-2" type="submit" id="deleteBtn" name="btn" value="{{ item[0] }}">Delete Item</button>
                             </div>
                         </div>
                     </div>

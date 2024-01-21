@@ -12,8 +12,9 @@
 {% endblock%}
 
 {% block content %}
-{{ set order_status = ['in process', 'in preparation', 'cancelled', 'completed']}}
+
 <div class="container mt-5">
+    {% set order_status = ['in process', 'in preparation', 'cancelled', 'completed'] %}
     <table class="table">
         <thead>
             <tr>
@@ -22,33 +23,37 @@
                 <th>Name</th>
                 <th>Address</th>
                 <th>Order</th>
+                <th>Comment</th>
                 <th>Order Status</th>
             </tr>
         </thead>
         <tbody>
+            <form method = "POST">
             {% for order in orders %}
                 <tr style="white-space: pre-line;">
-                    <td> {{ order[0] }} </td>
                     <td> {{ order[1] }} </td>
                     <td> {{ order[2] }} </td>
                     <td> {{ order[3] }} </td>
                     <td> {{ order[4] }} </td>
                     <td> {{ order[5] }} </td>
-                    {% if order[5]==order_status[0] %}
+                    <td> {{ order[6] }} </td>
+                    <td> {{ order[7] }} </td>
+                    {% if order[7]==order_status[0] %}
                         <td>
-                            <button type="submit" class="btn btn-outline-success" name="confirm">Confirm</button>
+                            <button type="submit" class="btn btn-outline-success" name="confirm" value="{{ order[0] }}">Confirm</button>
                             -
-                            <button type="submit" class="btn btn-outline-success" name="cancel">Cancel</button>
+                            <button type="submit" class="btn btn-outline-success" name="cancel" value="{{ order[0] }}">Cancel</button>
                         </td>
-                    {% elif order[5] == order_status[1]%}
+                    {% elif order[7] == order_status[1]%}
                         <td>
-                            <button type="submit" class="btn btn-primary" name="complete">Complete</button>
+                            <button type="submit" class="btn btn-primary" name="complete" value="{{ order[0] }}">Complete</button>
                         </td>
                     {% else %}
                         <td></td>
                     {% endif %}
                 </tr>
             {% endfor %}
+            </form>
         </tbody>
     </table>
 </div>

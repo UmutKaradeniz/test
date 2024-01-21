@@ -76,13 +76,11 @@ def customerhome():
                 if session['cart'][0] == res_id:
                     pass
                 else:
-                    print(session['cart'])
                     session.pop("cart", default = None)
                     flash("Shopping cart has been reset.", category = 'error')
                     session['cart'] = []
                     session['cart'].append(res_id)
                     session.modified = True
-                    print(session['cart'])
             else:
                 session['cart'].append(res_id)
                 session.modified = True
@@ -118,26 +116,32 @@ def shopping_cart():
         cus_id = session['id']
         for item_id in session['cart'][1:]:
             menu_items.append(DBfuncs.retrieveMenuItem(item_id))
-        for price in menu_items:
-            total = total + price[4]
         user_info = DBfuncs.retrieveCusData(cus_id)
         if request.method == 'POST':
-            order = ""
-            i = 0
-            time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-            res_id = session['cart'][0]
-            res_name = DBfuncs.getResName(res_id)
-            cus_name, cus_surname, cus_address = DBfuncs.getCusNameAddress(cus_id)
-            for key, value in request.form.items():
-                if "quantity" in key:
-                    order = order + str(menu_items[i][1]) + ' x' + str(value) + "\n"
-                    i = i + 1
-                if "comment" in key:
-                    comment = value
-            DBfuncs.addNewOrder(time, res_id, res_name, cus_id, cus_name, cus_surname, cus_address, order, comment)
-            return redirect(url_for('auth.order_list'))
+            if request.form["btn"] == "confirm":
+                order = ""
+                i = 0
+                time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+                res_id = session['cart'][0]
+                res_name = DBfuncs.getResName(res_id)
+                cus_name, cus_surname, cus_address = DBfuncs.getCusNameAddress(cus_id)
+                for key, value in request.form.items():
+                    if "quantity" in key:
+                        order = order + str(menu_items[i][1]) + ' x' + str(value) + "\n"
+                        i = i + 1
+                    if "comment" in key:
+                        comment = value
+                DBfuncs.addNewOrder(time, res_id, res_name, cus_id, cus_name, cus_surname, cus_address, order, comment)
+                return redirect(url_for('auth.order_list'))
+            elif request.form["btn"] in session['cart'][1:]:
+                print(session['cart'])
+                item_id = request.form["btn"]
+                session['cart'][1:] = [ele for ele in session['cart'][1:] if ele != item_id]
+                session.modified = True
+                print(session['cart'])
+                return redirect(url_for('auth.shopping_cart'))
         else:
-            return render_template("shoppingcart.html", menu_items = menu_items, user_info = user_info, total = total)
+            return render_template("shoppingcart.html", menu_items = menu_items, user_info = user_info)
     else:
         return redirect(url_for('auth.login'))
 
@@ -237,6 +241,23 @@ def settings():
                     return redirect(url_for('auth.settings'))
         else:
             return render_template("restaurantsettings.html", plzList = plzList)
+    else:
+        return redirect(url_for('auth.login'))
+    
+@auth.route('/orders', methods = ['GET', 'POST'])
+def orders():
+    if 'id' in session:
+        res_id = session['id']
+        orders = DBfuncs.getRestaurantOrders(res_id)
+        if request.method == 'POST':
+            ord_id = request.form.values()
+            if request.form.keys() == "confirm":
+                DBfuncs.changeStatusOrder("in preparation", ord_id)
+            elif request.form.keys() == "cancel":
+                DBfuncs.changeStatusOrder("cancelled", ord_id)
+            elif request.form.keys() == "complete":
+                DBfuncs.changeStatusOrder("completed", ord_id)
+        return render_template("restaurantorders.html", orders = orders)
     else:
         return redirect(url_for('auth.login'))
 

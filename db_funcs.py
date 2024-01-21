@@ -282,7 +282,7 @@ class DBfuncs:
             con = sql.connect('database.db')
             con.execute("PRAGMA foreign_keys = ON")
             cur = con.cursor() 
-            cur.execute("INSERT INTO orders VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (None, time, res_id, res_name, cus_id, cus_name, cus_surname, cus_address, order, comment, None))  
+            cur.execute("INSERT INTO orders VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", (None, time, res_id, res_name, cus_id, cus_name, cus_surname, cus_address, order, comment, "in process"))  
             con.commit()
             con.close()
         except sql.Error as Err:
@@ -297,6 +297,28 @@ class DBfuncs:
             con.commit()
             con.close()
             return data
+        except sql.Error as Err:
+            print("SQLite Error: ", Err)
+
+    def getRestaurantOrders(res_id):
+        try:
+            con = sql.connect('database.db')
+            cur = con.cursor() 
+            cur.execute("SELECT id, date_Time, cus_Surname, cus_Name, cus_Address, order_info, comment, status FROM orders WHERE res_id = (?)", (res_id, ))
+            data = cur.fetchall()
+            con.commit()
+            con.close()
+            return data
+        except sql.Error as Err:
+            print("SQLite Error: ", Err)
+
+    def changeStatusOrder(status, ord_id):
+        try:
+            con = sql.connect('database.db')
+            cur = con.cursor()
+            cur.execute("UPDATE orders SET status = (?) WHERE id = (?)", (status, ord_id))
+            con.commit()
+            con.close()
         except sql.Error as Err:
             print("SQLite Error: ", Err)
     
