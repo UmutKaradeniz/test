@@ -24,17 +24,13 @@
             </tr>
         </thead>
         <tbody>
-            {% for i in range(4) %}
+            {% for order in orders %}
                 <tr>
-                    <td> order.date_time </td>
-                    <td> order.restaurant_name </td>
-                    <td>
-                        {% for i in range(4) %}
-                             item.name  x  item.quantity <br>
-                        {% endfor %}
-                    </td>
-                    <td> order.comment </td>
-                    <td> order.status </td>
+                    <td> {{ order[0] }} </td>
+                    <td> {{ order[1] }} </td>
+                    <td> {{ order[2] }} </td>
+                    <td> {{ order[3] }} </td>
+                    <td> {{ order[4] }} </td>
                 </tr>
             {% endfor %}
         </tbody>

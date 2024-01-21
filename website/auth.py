@@ -114,31 +114,39 @@ def menu():
 def shopping_cart():
     if 'id' in session:
         menu_items= []
-        id = session['id']
         total = 0
+        cus_id = session['id']
         for item_id in session['cart'][1:]:
             menu_items.append(DBfuncs.retrieveMenuItem(item_id))
         for price in menu_items:
             total = total + price[4]
-        user_info = DBfuncs.retrieveCusData(id)
+        user_info = DBfuncs.retrieveCusData(cus_id)
         if request.method == 'POST':
             order = ""
             i = 0
             time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             res_id = session['cart'][0]
             res_name = DBfuncs.getResName(res_id)
-            cus_id = session['id']
             cus_name, cus_surname, cus_address = DBfuncs.getCusNameAddress(cus_id)
             for key, value in request.form.items():
                 if "quantity" in key:
-                    order = order + str(menu_items[i][1]) + ' x' + str(value) + "\n"
+                    order = order + str(menu_items[i][1]) + ' x' + str(value)
                     i = i + 1
                 if "comment" in key:
                     comment = value
             DBfuncs.addNewOrder(time, res_id, res_name, cus_id, cus_name, cus_surname, cus_address, order, comment)
-            return render_template("shoppingcart.html", menu_items = menu_items, user_info = user_info, total = total)
+            return redirect(url_for('auth.order_list'))
         else:
             return render_template("shoppingcart.html", menu_items = menu_items, user_info = user_info, total = total)
+    else:
+        return redirect(url_for('auth.login'))
+
+@auth.route('/order_list', methods = ['GET', 'POST'])
+def order_list():
+    if 'id' in session:
+        cus_id = session['id']
+        orders = DBfuncs.getCustomerOrders(cus_id)
+        return render_template("customerorders.html", orders = orders)
     else:
         return redirect(url_for('auth.login'))
 

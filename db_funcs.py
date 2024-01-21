@@ -287,21 +287,18 @@ class DBfuncs:
             con.close()
         except sql.Error as Err:
             print("SQLite Error: ", Err)
+
+    def getCustomerOrders(cus_id):
+        try:
+            con = sql.connect('database.db')
+            cur = con.cursor() 
+            cur.execute("SELECT date_Time, res_Name, order_info, comment, status FROM orders WHERE cus_id = (?)", (cus_id, ))
+            data = cur.fetchall()
+            con.commit()
+            con.close()
+            return data
+        except sql.Error as Err:
+            print("SQLite Error: ", Err)
     
 if __name__ == "__main__":
     DBfuncs.createTables()
-    # DBfuncs.registerCustomer("Karadeniz2", "Umut", "ABC 6", 47055, "Umut_Karadeniz", 1234554321)
-    # DBfuncs.registerRestaurant("Al-Basha2", "ABC 7", 47055, 123321)
-    # DBfuncs.addNewItem(3, "hamburger", "meat", "Main", 20)
-    # DBfuncs.addNewPostcode(1, 12345)
-    # DBfuncs.addNewPostcode(2, 12345)
-    # DBfuncs.addNewPostcode(3, 12345)
-    # DBfuncs.addNewPostcode(1, 23456)
-    # DBfuncs.addNewPostcode(2, 23456)
-    # DBfuncs.retrieveResData(4)
-    # DBfuncs.retrieveResData(3)
-    # DBfuncs.getIDCustomer("a")
-    # DBfuncs.addNewItem(5, "pizza", "tomato", "Main", 15)
-    # DBfuncs.addNewItem(5, "hamburger", "meat", "Main", 25)
-    # DBfuncs.addNewItem(5, "ice-cream", "vanilla", "Desert", 5)
-    # DBfuncs.retrieveMenuItems(5)
