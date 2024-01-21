@@ -22,7 +22,7 @@ class DBfuncs:
                 address TEXT NOT NULL,
                 postcode INTEGER NOT NULL,
                 password TEXT NOT NULL,
-                picture BLOB,
+                picture TEXT,
                 opening TIME,
                 closing TIME                          
             )""")
@@ -73,7 +73,7 @@ class DBfuncs:
         return response
 
     #Restaurant registration to the DB
-    def registerRestaurant(res_name, address, postcode, password, img_path = None):
+    def registerRestaurant(res_name, address, postcode, password, img_path):
         con = sql.connect('database.db')
         cur = con.cursor()
         response = False

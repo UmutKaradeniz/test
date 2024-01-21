@@ -1,9 +1,13 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, current_app
 from db_funcs import *
 from flask import session 
 from datetime import datetime
+import os
+import uuid
 
 auth = Blueprint('auth', __name__)
+
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 #function/route to render home page
 @auth.route('/', methods = ['GET', 'POST'])
@@ -28,21 +32,31 @@ def registerCustomer():
                 return redirect(url_for('auth.login'))
             else:
                 flash('Username already exists. Please choose a different username.', category = 'error')
-        elif request.form["btn"] == "restaurant":            
+        elif request.form["btn"] == "restaurant":          
             res_name = request.form.get('res_name')
             address = request.form.get('address')
             postcode = request.form.get('postcode')
             password = request.form.get('password')
+            file = request.files['file']
+            # if user does not select file, set file_path None
+            if file.filename == '':
+                filename = 'default-restaurant-picture.png'
+            elif file and allowed_file(file.filename):
+                file.filename = str(uuid.uuid4()) + ".png"
+                file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], file.filename).replace("\\", "/"))
+                filename = file.filename
             if res_name == "" or address == "" or len(postcode) != 5 or password == "":
                 flash('Please fill all of the entries of the form correctly.', category = 'error')
-            elif DBfuncs.registerRestaurant(res_name, address, postcode, password) is not False:
+            elif DBfuncs.registerRestaurant(res_name, address, postcode, password, filename) is not False:
                 flash('Registration successful.', category = 'success')
                 return redirect(url_for('auth.login'))
             else:
                 flash('Restaurant name already exists. Please choose a different username.', category = 'error')
 
     return render_template("sign-up.html")  
-    
+
+def allowed_file(filename): return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS   
+
 #function/route to login
 @auth.route('/login', methods = ['GET', 'POST'])
 def login():
@@ -69,6 +83,7 @@ def customerhome():
         if request.method == 'GET':
             cus_id = session['id']
             restaurants = DBfuncs.retrieveResData(cus_id)
+            print(restaurants)
             return render_template("customerhome.html", restaurants = restaurants)
         if request.method == 'POST':
             res_id = request.form["btn"]
