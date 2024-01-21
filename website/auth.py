@@ -130,7 +130,7 @@ def shopping_cart():
             cus_name, cus_surname, cus_address = DBfuncs.getCusNameAddress(cus_id)
             for key, value in request.form.items():
                 if "quantity" in key:
-                    order = order + str(menu_items[i][1]) + ' x' + str(value)
+                    order = order + str(menu_items[i][1]) + ' x' + str(value) + "\n"
                     i = i + 1
                 if "comment" in key:
                     comment = value

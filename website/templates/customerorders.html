@@ -25,7 +25,7 @@
         </thead>
         <tbody>
             {% for order in orders %}
-                <tr>
+                <tr style="white-space: pre-line;">
                     <td> {{ order[0] }} </td>
                     <td> {{ order[1] }} </td>
                     <td> {{ order[2] }} </td>
@@ -36,4 +36,5 @@
         </tbody>
     </table>
 </div>
+
 {% endblock%}
