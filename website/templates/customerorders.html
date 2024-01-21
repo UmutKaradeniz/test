@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% block title %}Order history{% endblock %} 
+
+{% block logo %}
+<a href="/customerhome" class="navbar-brand text-decoration-none">
+  <img src="../static/Lieferspatz-logo.png" alt="Lieferspatz Logo" class="img-fluid" style="max-height: 160px;">
+  Lieferspatz
+</a>
+{% endblock %}
+
+{% block navbar_items%}
+
+{% endblock%}
+
+{% block content %}
+<div class="container mt-5">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date and Time</th>
+                <th>Restaurant Name</th>
+                <th>Order</th>
+                <th>Comment</th>
+                <th>Order Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in range(4) %}
+                <tr>
+                    <td> order.date_time </td>
+                    <td> order.restaurant_name </td>
+                    <td>
+                        {% for i in range(4) %}
+                             item.name  x  item.quantity <br>
+                        {% endfor %}
+                    </td>
+                    <td> order.comment </td>
+                    <td> order.status </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock%}
