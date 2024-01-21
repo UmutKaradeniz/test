@@ -17,10 +17,8 @@
     
     <!-- Block to be overwritten by other pages-->
     <title>{% block title %}Home{% endblock %}</title>
-  </head>
 
-  <!--Top bar for every page-->
-  <body>
+    <!--Top bar for every page-->
     <div class="container-fluid">
       <div class="row bg-light text-dark p-2">
         <div class="col-6">
@@ -34,6 +32,10 @@
         {% block navbar_items%} {% endblock%}
       </div>
     </div>
+
+  </head>
+
+  <body>
 
     <!--Catch flash messages from flash to display them nicely using bootstrap classes-->
     {% with messages = get_flashed_messages(with_categories=true) %} 
@@ -59,7 +61,7 @@
     {% endwith %}
     
     <!--Block to be overwritten-->  
-    <div class="container">{% block content %} {% endblock %}</div>
+    {% block content %} {% endblock %}
 
     <!--Import bootstrap-->
     <script

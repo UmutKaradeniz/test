@@ -12,10 +12,9 @@
 {% endblock%}
 
 {% block content %}
-
-<div class="container mt-5">
+<div class="table-container mt-5 mx-5">
     {% set order_status = ['in process', 'in preparation', 'cancelled', 'completed'] %}
-    <table class="table">
+    <table class="table" style="table-layout: auto; width: 100%;">
         <thead>
             <tr>
                 <th>Date and Time</th>
@@ -25,6 +24,7 @@
                 <th>Order</th>
                 <th>Comment</th>
                 <th>Order Status</th>
+                <th>Manage Order</th>
             </tr>
         </thead>
         <tbody>
@@ -40,9 +40,10 @@
                     <td> {{ order[7] }} </td>
                     {% if order[7]==order_status[0] %}
                         <td>
-                            <button type="submit" class="btn btn-outline-success" name="confirm" value="{{ order[0] }}">Confirm</button>
-                            -
-                            <button type="submit" class="btn btn-outline-success" name="cancel" value="{{ order[0] }}">Cancel</button>
+                            <div class="row">
+                                <button type="submit" class="btn btn-outline-success" name="confirm" value="{{ order[0] }}">Confirm</button>&nbsp
+                                <button type="submit" class="btn btn-outline-danger" name="cancel" value="{{ order[0] }}">Cancel</button>
+                            </div>
                         </td>
                     {% elif order[7] == order_status[1]%}
                         <td>
