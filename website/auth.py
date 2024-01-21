@@ -134,11 +134,9 @@ def shopping_cart():
                 DBfuncs.addNewOrder(time, res_id, res_name, cus_id, cus_name, cus_surname, cus_address, order, comment)
                 return redirect(url_for('auth.order_list'))
             elif request.form["btn"] in session['cart'][1:]:
-                print(session['cart'])
                 item_id = request.form["btn"]
                 session['cart'][1:] = [ele for ele in session['cart'][1:] if ele != item_id]
                 session.modified = True
-                print(session['cart'])
                 return redirect(url_for('auth.shopping_cart'))
         else:
             return render_template("shoppingcart.html", menu_items = menu_items, user_info = user_info)
@@ -153,7 +151,6 @@ def order_list():
         return render_template("customerorders.html", orders = orders)
     else:
         return redirect(url_for('auth.login'))
-
 
 #function/route for custoerm home page
 @auth.route('/restauranthome', methods = ['GET', 'POST'])
@@ -250,13 +247,16 @@ def orders():
         res_id = session['id']
         orders = DBfuncs.getRestaurantOrders(res_id)
         if request.method == 'POST':
-            ord_id = request.form.values()
-            if request.form.keys() == "confirm":
+            if 'confirm' in request.form.keys():
+                ord_id = request.form["confirm"]
                 DBfuncs.changeStatusOrder("in preparation", ord_id)
-            elif request.form.keys() == "cancel":
+            elif 'cancel' in request.form.keys():
+                ord_id = request.form["cancel"]
                 DBfuncs.changeStatusOrder("cancelled", ord_id)
-            elif request.form.keys() == "complete":
+            elif 'complete' in request.form.keys():
+                ord_id = request.form["complete"]
                 DBfuncs.changeStatusOrder("completed", ord_id)
+            return redirect(url_for('auth.orders'))
         return render_template("restaurantorders.html", orders = orders)
     else:
         return redirect(url_for('auth.login'))
