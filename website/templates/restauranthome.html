@@ -53,8 +53,8 @@
 
 <!-- Food items sections -->
 {% for category in food_categories %}
-<div id="{{ category }}" class="food-section">
-  <h2 align="center">{{ category }}</h1>
+<div id="{{ category }}" class="food-section container mt-5">
+  <h1 align="center">{{ category }}</h1>
   {% for food_item in menu_items %}
     {% if food_item[3] == category %}
         <div class="card mb-3">
@@ -76,8 +76,9 @@
 {% endfor %}
 
 <!-- Add Food Button -->
-<div class="card mb-3">
-        <button type="button" class="btn btn-success btn-lg add-food-button" onclick="location.href='/add_item'">
+<h1 align="center">Add food</h1>
+<div class="container col-md-2 my-5" align="center">
+        <button type="button" class="btn btn-success btn-lg btn-block add-food-button" onclick="location.href='/add_item'">
             +
         </button>
     </div>

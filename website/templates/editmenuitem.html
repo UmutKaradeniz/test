@@ -10,7 +10,8 @@
 {% block navbar_items%} {% endblock%}
 
 {% block content %}
-<form method="POST">
+<div class="container my-5">
+  <form method="POST">
     <h3 align="center">Edit or remove a menu item</h3>
     <div class="form-group">
         <label for="foodpicture">Food Picture</label>
@@ -72,4 +73,6 @@
     <button type="submit" class="btn btn-danger" name="btn" value="remove">Remove</button>
     <button type="submit" class="btn btn-primary" name="btn" value="save">Save</button>
   </form>
+</div>
+
 {% endblock %}

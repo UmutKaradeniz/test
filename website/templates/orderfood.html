@@ -50,9 +50,10 @@
 </div>
 
 <!-- Food items sections -->
+
 {% for category in food_categories %}
-<div id="{{ category }}" class="food-section">
-  <h2 align="center">{{ category }}</h1>
+<div id="{{ category }}" class="food-section container mt-5">
+  <h1 align="center">{{ category }}</h1>
   {% for food_item in menu_items %}
     {% if food_item[3] == category %}
         <div class="card mb-3">
