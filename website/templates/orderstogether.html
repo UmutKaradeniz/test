@@ -1,0 +1,44 @@
+
+{% extends "base.html" %}
+{% block title %}Order List{% endblock %}
+
+{% block logo %}
+<a href="/restauranthome" class="navbar-brand text-decoration-none">
+  <img src="../static/Lieferspatz-logo.png" alt="Lieferspatz Logo" class="img-fluid" style="max-height: 160px;">
+  Lieferspatz
+</a>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Order List</h2>
+
+    <!-- Table to display order list -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date and Time</th>
+                <th>Surname</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Order</th>
+                <th>Status</th>
+                <th>Status Change</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orderList %}
+                <tr>
+                    <td>{{ order.date_time }}</td>
+                    <td>{{ order.surname }}</td>
+                    <td>{{ order.name }}</td>
+                    <td>{{ order.address }}</td>
+                    <td>{{ order.order }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>{{ order.status_change }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
