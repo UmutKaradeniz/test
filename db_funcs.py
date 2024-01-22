@@ -33,6 +33,7 @@ class DBfuncs:
                 ingredients TEXT NOT NULL, 
                 type TEXT CHECK(TYPE IN('Main', 'Side', 'Dessert', 'Drink')) NOT NULL,
                 price INTEGER NOT NULL,
+                picture TEXT,
                 FOREIGN KEY(res_id) REFERENCES restaurants(id)       
             )""")
         cur.execute("""CREATE TABLE IF NOT EXISTS allowed_postcode(
@@ -73,13 +74,13 @@ class DBfuncs:
         return response
 
     #Restaurant registration to the DB
-    def registerRestaurant(res_name, address, postcode, password, img_path):
+    def registerRestaurant(res_name, address, postcode, password, filename):
         con = sql.connect('database.db')
         cur = con.cursor()
         response = False
         sqlite_insert_blob_query = """ INSERT INTO restaurants
                                   (id, res_name, address, postcode, password, picture) VALUES (?, ?, ?, ?, ?, ?)"""
-        data_tuple = (None, res_name, address, postcode, password, img_path)
+        data_tuple = (None, res_name, address, postcode, password, filename)
         cur.execute("SELECT EXISTS (SELECT * FROM restaurants WHERE res_name=?)", (res_name,))
         result = cur.fetchone()[0]
         if not bool(result):
@@ -108,12 +109,12 @@ class DBfuncs:
         return True if bool(result) == True else False  
     
     #Adding menu item to Restaurant Menu
-    def addNewItem(res_id, name, ingredients, type, price):
+    def addNewItem(res_id, name, ingredients, type, price, filename):
         try:
             con = sql.connect('database.db')
             con.execute("PRAGMA foreign_keys = ON")
             cur = con.cursor() 
-            cur.execute("INSERT INTO menu_items VALUES (?, ?, ?, ?, ?, ?)", (None, res_id, name, ingredients, type, price))
+            cur.execute("INSERT INTO menu_items VALUES (?, ?, ?, ?, ?, ?, ?)", (None, res_id, name, ingredients, type, price, filename))
             con.commit()
             con.close()
             return True
@@ -212,7 +213,7 @@ class DBfuncs:
     def retrieveMenuItems(id):
         con = sql.connect('database.db')
         cur = con.cursor()
-        cur.execute("""SELECT id, name, ingredients, type, price FROM menu_items
+        cur.execute("""SELECT id, name, ingredients, type, price, picture FROM menu_items
                         WHERE res_id = ?""", (id, ))
         data = cur.fetchall()
         con.commit()

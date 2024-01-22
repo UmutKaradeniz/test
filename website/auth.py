@@ -38,7 +38,7 @@ def registerCustomer():
             postcode = request.form.get('postcode')
             password = request.form.get('password')
             file = request.files['file']
-            # if user does not select file, set file_path None
+            # if user does not select file, set filename to default picture
             if file.filename == '':
                 filename = 'default-restaurant-picture.png'
             elif file and allowed_file(file.filename):
@@ -191,7 +191,14 @@ def add_item():
             description = request.form.get('itemdesc')
             type = request.form.get('itemtype')
             price = request.form.get('itemprice')
-            DBfuncs.addNewItem(id, name, description, type, price)
+            file = request.files['file']
+            if file.filename == '':
+                filename = 'default-food-picture.png'
+            elif file and allowed_file(file.filename):
+                file.filename = str(uuid.uuid4()) + ".png"
+                file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], file.filename).replace("\\", "/"))
+                filename = file.filename
+            DBfuncs.addNewItem(id, name, description, type, price, filename)
             flash("Added new item successfully!", category = 'success')
             return redirect(url_for('auth.restauranthome'))
         else:  
