@@ -320,28 +320,28 @@ def initExampleDB():
     ]
     orders = [
     # Order 1 for Umut
-    ("2024-01-22 20:30", 1, 1, "Umut", "Karadeniz", "123 Main St", 'Margherita Pizza', "Delivered"),
+    ("2024-01-22 20:30", 1,'Bella Italia', 1, "Umut", "Karadeniz", "123 Main St", 'Margherita Pizza', "Delivered"),
 
     # Order 2 for Umut
-    ("2024-01-23 19:45", 1, 1, "Umut", "Karadeniz", "123 Main St", 'Spaghetti Bolognese', "In Progress"),
+    ("2024-01-23 19:45", 1, 'Bella Italia',1, "Umut", "Karadeniz", "123 Main St", 'Spaghetti Bolognese', "In Progress"),
 
     # Order 1 for Alp
-    ("2024-01-24 18:15", 2, 2, "Okan", "Alp", "456 Oak St", 'Chicken Tikka Masala', "Pending"),
+    ("2024-01-24 18:15", 2, 'Taste of India',2, "Okan", "Alp", "456 Oak St", 'Chicken Tikka Masala', "Pending"),
 
     # Order 2 for Alp
-    ("2024-01-25 20:00", 2, 2, "Okan", "Alp", "456 Oak St", 'Chicken Korma', "Delivered"),
+    ("2024-01-25 20:00", 2, 'Taste of India',2, "Okan", "Alp", "456 Oak St", 'Chicken Korma', "Delivered"),
 
     # Order 1 for Pelin
-    ("2024-01-22 17:30", 3, 3, "Pala", "Pelin", "789 Pine St", 'Chocolate Cannoli', "Delivered"),
+    ("2024-01-22 17:30", 3, 'Mamma Mia Pizzeria',3, "Pala", "Pelin", "789 Pine St", 'Chocolate Cannoli', "Delivered"),
 
     # Order 2 for Pelin
-    ("2024-01-23 18:45", 3, 3, "Pala", "Pelin", "789 Pine St", 'Caesar Side', "In Progress"),
+    ("2024-01-23 18:45", 3, 'Mamma Mia Pizzeria',3, "Pala", "Pelin", "789 Pine St", 'Caesar Side', "In Progress"),
 
     # Order 1 for Efe
-    ("2024-01-24 18:15", 5, 5, "Akdeniz", "Efe", "202 Maple St", 'Grilled Asparagus', "Pending"),
+    ("2024-01-24 18:15", 5, 'Steakhouse Deluxe',5, "Akdeniz", "Efe", "202 Maple St", 'Grilled Asparagus', "Pending"),
 
     # Order 2 for Efe
-    ("2024-01-25 20:00", 5, 5, "Akdeniz", "Efe", "202 Maple St", 'Ribeye Steak', "Delivered"),
+    ("2024-01-25 20:00", 5, 'Steakhouse Deluxe',5, "Akdeniz", "Efe", '202 Maple St', 'Ribeye Steak', "Delivered"),
 ]
 
     
