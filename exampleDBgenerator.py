@@ -360,7 +360,7 @@ def initExampleDB():
     for postcode in restaurant_postcodes:
         DBfuncs.addNewPostcode(postcode[0], postcode[1])
     for order in orders:
-        DBfuncs.addNewOrder(order[0], order[1], order[2], order[3], order[4], order[5], order[6])
+        DBfuncs.addNewOrder(order[0], order[1], order[2], order[3], order[4], order[5], order[6],order[7])
 
         
         
