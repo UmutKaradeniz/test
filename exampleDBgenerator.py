@@ -2,38 +2,26 @@ from db_funcs import *
 
 def initExampleDB():
     customers = [
-        ('Smith', 'John', '123 Main St', 12345, 'jsmith', 'password123'),
-        ('Johnson', 'Alice', '456 Oak St', 56789, 'ajohnson', 'securepass'),
-        ('Davis', 'Michael', '789 Pine St', 98765, 'mdavis', 'mypassword'),
-        ('Miller', 'Sarah', '101 Elm St', 54321, 'smiller', 'letmein123'),
-        ('Wilson', 'David', '202 Maple St', 13579, 'dwilson', 'pass123'),
-        ('Anderson', 'Emily', '303 Birch St', 24680, 'eanderson', 'password456'),
-        ('Thomas', 'Robert', '404 Cedar St', 87654, 'rthomas', 'secure123'),
-        ('White', 'Jessica', '505 Walnut St', 23456, 'jwhite', 'mypassword789'),
-        ('Harris', 'Brian', '606 Oakwood St', 78901, 'bharris', 'password789'),
-        ('Clark', 'Megan', '707 Pinecrest St', 32145, 'mclark', 'letmein456'),
-        ('Turner', 'Daniel', '808 Cedarwood St', 56789, 'dturner', 'secure456'),
-        ('Brown', 'Rachel', '909 Birchwood St', 98765, 'rbrown', 'mypassword123'),
-        ('Moore', 'Christopher', '111 Willow St', 54321, 'cmoore', 'pass456'),
-        ('Taylor', 'Olivia', '222 Oakdale St', 13579, 'otaylor', 'passwordabc'),
-        ('Martin', 'Andrew', '333 Pinewood St', 24680, 'amartin', 'letmein789')
+        ('Karadeniz', 'Umut', '123 Main St', 12345, 'soumkaradeniz', 'umut'),
+        ('Okan', 'Alp', '456 Oak St', 56789, 'soalokan', 'alp'),
+        ('Pala', 'Pelin', '789 Pine St', 98765, 'sopepala', 'pelo'),
+        ('Cheikh-el-Chabab', 'Fadi', '101 Elm St', 54321, 'sofael', 'fadi'),
+        ('Akdeniz', 'Efe', '202 Maple St', 13579, 'efeakdnz', 'efe'),
     ]
     restaurants = [
-        ('Bella Italia', '123 Main St', 12345, 'password123', '08:00:00', '22:00:00'),
-        ('Taste of India', '456 Oak St', 56789, 'securepass', '11:30:00', '20:30:00'),
-        ('Mamma Mia Pizzeria', '789 Pine St', 98765, 'mypassword', '10:00:00', '23:00:00'),
-        ('Sushi Heaven', '101 Elm St', 54321, 'letmein123', '12:00:00', '21:00:00'),
-        ('Steakhouse Deluxe', '202 Maple St', 13579, 'pass123', '17:00:00', '23:30:00'),
-        ('Vegetarian Delights', '303 Birch St', 24680, 'password456', '09:00:00', '20:00:00'),
-        ('The Burger Joint', '404 Cedar St', 87654, 'secure123', '11:00:00', '22:30:00'),
-        ('Seafood Sensation', '505 Walnut St', 23456, 'mypassword789', '12:30:00', '21:30:00'),
-        ('Mexican Fiesta', '606 Oakwood St', 78901, 'password789', '10:30:00', '22:00:00'),
-        ('Noodle House', '707 Pinecrest St', 32145, 'letmein456', '11:00:00', '20:00:00'),
-        ('BBQ Grill Masters', '808 Cedarwood St', 56789, 'secure456', '15:00:00', '23:00:00'),
-        ('Sweet Treats Bakery', '909 Birchwood St', 98765, 'mypassword123', '08:30:00', '19:30:00'),
-        ('Coffee Haven', '111 Willow St', 54321, 'pass456', '07:00:00', '18:00:00'),
-        ('Thai Orchid', '222 Oakdale St', 13579, 'passwordabc', '12:00:00', '22:00:00'),
-        ('Gourmet Grill', '333 Pinewood St', 24680, 'letmein789', '14:00:00', '23:30:00')
+        ('Bella Italia', '123 Main St', 12345, 'bellaitalia', '08:00:00', '22:00:00'),
+        ('Taste of India', '456 Oak St', 56789, 'india', '11:30:00', '20:30:00'),
+        ('Mamma Mia Pizzeria', '789 Pine St', 98765, 'pizzeria', '10:00:00', '23:00:00'),
+        ('Sushi Heaven', '101 Elm St', 54321, 'sushi', '12:00:00', '21:00:00'),
+        ('Steakhouse Deluxe', '202 Maple St', 13579, 'steak', '17:00:00', '23:30:00'),
+        ('Vegetarian Delights', '303 Birch St', 24680, 'vegan', '09:00:00', '20:00:00'),
+        ('The Burger Joint', '404 Cedar St', 87654, 'burgers', '11:00:00', '22:30:00'),
+        ('Seafood Sensation', '505 Walnut St', 23456, 'seafood', '12:30:00', '21:30:00'),
+        ('Mexican Fiesta', '606 Oakwood St', 78901, 'mexican', '10:30:00', '22:00:00'),
+        ('Noodle House', '707 Pinecrest St', 32145, 'noodles', '11:00:00', '20:00:00'),
+        ('Sweet Treats Bakery', '909 Birchwood St', 98765, 'sweetstuff', '08:30:00', '19:30:00'),
+        ('Coffee Haven', '111 Willow St', 54321, 'coffee', '07:00:00', '18:00:00'),
+       
     ]
     menu_items = [
         # Menu items for Bella Italia (res_id = 1)
@@ -156,86 +144,52 @@ def initExampleDB():
         (10, 'Drunken Noodles', 'Wide Rice Noodles, Chicken, Basil', 'Main', 15),
         (10, 'Bubble Tea', 'Black Tea, Milk, Tapioca Pearls', 'Drink', 6),
 
-        # Menu items for BBQ Grill Masters (res_id = 11)
-        (11, 'Brisket Plate', 'Smoked Brisket, BBQ Sauce, Coleslaw', 'Main', 18),
-        (11, 'Pulled Pork Sandwich', 'Pulled Pork, BBQ Sauce, Pickles', 'Main', 15),
-        (11, 'Mac and Cheese', 'Elbow Macaroni, Cheese Sauce, Bread Crumbs', 'Side', 8),
-        (11, 'Baby Back Ribs', 'Baby Back Pork Ribs, Dry Rub, BBQ Glaze', 'Main', 20),
-        (11, 'Burnt Ends', 'Smoked Beef Ends, BBQ Sauce', 'Main', 16),
-        (11, 'Cornbread', 'Cornmeal, Flour, Buttermilk', 'Side', 6),
-        (11, 'BBQ Chicken Wings', 'Chicken Wings, BBQ Seasoning', 'Side', 10),
-        (11, 'Collard Greens', 'Collard Greens, Bacon, Onion', 'Side', 7),
-        (11, 'Peach Cobbler', 'Peaches, Sugar, Cinnamon', 'Dessert', 9),
-        (11, 'Sweet Tea', 'Black Tea, Sugar, Lemon', 'Drink', 4),
+        # Menu items for Sweet Treats Bakery (res_id = 11)
+        (11, 'Chocolate Chip Cookies', 'Chocolate Chips, Butter, Flour', 'Dessert', 3),
+        (11, 'Red Velvet Cupcakes', 'Red Velvet Cake, Cream Cheese Frosting', 'Dessert', 4),
+        (11, 'Apple Pie', 'Apples, Sugar, Pie Crust', 'Dessert', 6),
+        (11, 'Cinnamon Rolls', 'Dough, Cinnamon, Cream Cheese Icing', 'Dessert', 5),
+        (11, 'Cheesecake', 'Cream Cheese, Graham Cracker Crust, Berry Topping', 'Dessert', 8),
+        (11, 'Croissants', 'Flour, Butter, Yeast', 'Dessert', 3),
+        (11, 'Pecan Pie Bars', 'Pecans, Shortbread Crust, Caramel', 'Dessert', 7),
+        (11, 'Chocolate Eclairs', 'Pastry, Custard, Chocolate Glaze', 'Dessert', 5),
+        (11, 'Donuts', 'Sugar , Chocolate, Powdered Sugar', 'Dessert', 4),
+        (11, 'Coffee Cake', 'Cinnamon Streusel, Vanilla Glaze', 'Dessert', 6),
 
-        # Menu items for Sweet Treats Bakery (res_id = 12)
-        (12, 'Chocolate Chip Cookies', 'Chocolate Chips, Butter, Flour', 'Dessert', 3),
-        (12, 'Red Velvet Cupcakes', 'Red Velvet Cake, Cream Cheese Frosting', 'Dessert', 4),
-        (12, 'Apple Pie', 'Apples, Sugar, Pie Crust', 'Dessert', 6),
-        (12, 'Cinnamon Rolls', 'Dough, Cinnamon, Cream Cheese Icing', 'Dessert', 5),
-        (12, 'Cheesecake', 'Cream Cheese, Graham Cracker Crust, Berry Topping', 'Dessert', 8),
-        (12, 'Croissants', 'Flour, Butter, Yeast', 'Dessert', 3),
-        (12, 'Pecan Pie Bars', 'Pecans, Shortbread Crust, Caramel', 'Dessert', 7),
-        (12, 'Chocolate Eclairs', 'Pastry, Custard, Chocolate Glaze', 'Dessert', 5),
-        (12, 'Lemon Bars', 'Lemon Curd, Shortbread Crust, Powdered Sugar', 'Dessert', 4),
-        (12, 'Coffee Cake', 'Cinnamon Streusel, Vanilla Glaze', 'Dessert', 6),
+        # Menu items for Coffee Haven (res_id = 12)
+        (12, 'Espresso', 'High-Quality Coffee', 'Drink', 3),
+        (12, 'Latte', 'Espresso, Steamed Milk', 'Drink', 4),
+        (12, 'Cappuccino', 'Espresso, Steamed Milk, Frothed Milk', 'Drink', 5),
+        (12, 'Mocha', 'Espresso, Chocolate, Steamed Milk', 'Drink', 6),
+        (12, 'Cold Brew', 'Coarse Ground Coffee, Cold Water', 'Drink', 4),
+        (12, 'Americano', 'Espresso, Hot Water', 'Drink', 3),
+        (12, 'Flat White', 'Espresso, Microfoam', 'Drink', 5),
+        (12, 'Iced Caramel Macchiato', 'Espresso, Caramel, Milk', 'Drink', 6),
+        (12, 'Vanilla Chai Latte', 'Chai Tea, Steamed Milk, Vanilla', 'Drink', 5),
+        (12, 'Affogato', 'Espresso, Vanilla Ice Cream', 'Dessert', 7),
 
-        # Menu items for Coffee Haven (res_id = 13)
-        (13, 'Espresso', 'High-Quality Coffee', 'Drink', 3),
-        (13, 'Latte', 'Espresso, Steamed Milk', 'Drink', 4),
-        (13, 'Cappuccino', 'Espresso, Steamed Milk, Frothed Milk', 'Drink', 5),
-        (13, 'Mocha', 'Espresso, Chocolate, Steamed Milk', 'Drink', 6),
-        (13, 'Cold Brew', 'Coarse Ground Coffee, Cold Water', 'Drink', 4),
-        (13, 'Americano', 'Espresso, Hot Water', 'Drink', 3),
-        (13, 'Flat White', 'Espresso, Microfoam', 'Drink', 5),
-        (13, 'Iced Caramel Macchiato', 'Espresso, Caramel, Milk', 'Drink', 6),
-        (13, 'Vanilla Chai Latte', 'Chai Tea, Steamed Milk, Vanilla', 'Drink', 5),
-        (13, 'Affogato', 'Espresso, Vanilla Ice Cream', 'Dessert', 7),
-
-        # Menu items for Thai Orchid (res_id = 14)
-        (14, 'Pad Thai', 'Rice Noodles, Shrimp, Tofu', 'Main', 12),
-        (14, 'Green Curry', 'Chicken, Green Curry Paste, Coconut Milk', 'Main', 14),
-        (14, 'Tom Yum Soup', 'Shrimp, Lemongrass, Chili', 'Side', 9),
-        (14, 'Som Tum Salad', 'Green Papaya, Cherry Tomatoes, Peanuts', 'Side', 8),
-        (14, 'Massaman Curry', 'Beef, Potatoes, Massaman Curry Paste', 'Main', 15),
-        (14, 'Chicken Satay', 'Chicken Skewers, Peanut Sauce', 'Side', 7),
-        (14, 'Pad See Ew', 'Wide Rice Noodles, Broccoli, Soy Sauce', 'Main', 11),
-        (14, 'Spring Rolls', 'Rice Paper, Shrimp, Vegetables', 'Side', 6),
-        (14, 'Coconut Ice Cream', 'Coconut Milk, Sugar, Vanilla', 'Dessert', 7),
-        (14, 'Thai Iced Tea', 'Black Tea, Sweetened Condensed Milk, Ice', 'Drink', 5),
-
-        # Menu items for Gourmet Grill (res_id = 15)
-        (15, 'Truffle Mushroom Burger', 'Beef Patty, Truffle Aioli, Mushrooms', 'Main', 16),
-        (15, 'Lobster Mac and Cheese', 'Lobster, Cavatappi Pasta, Cheese Sauce', 'Main', 24),
-        (15, 'Vegetarian Stuffed Peppers', 'Bell Peppers, Quinoa, Black Beans', 'Main', 14),
-        (15, 'Shrimp and Grits', 'Shrimp, Grits, Andouille Sausage', 'Main', 18),
-        (15, 'Caprese Sandwich', 'Tomato, Mozzarella, Basil, Balsamic Glaze', 'Main', 12),
-        (15, 'Pork Belly Tacos', 'Pork Belly, Cilantro, Pickled Onions', 'Main', 15),
-        (15, 'Sweet Potato Hash', 'Sweet Potatoes, Bell Peppers, Onions', 'Side', 8),
-        (15, 'Chocolate Fondue', 'Assorted Fruits, Melted Chocolate', 'Dessert', 10),
-        (15, 'Spicy Jalapeño Margarita', 'Tequila, Triple Sec, Jalapeño', 'Drink', 9),
-        (15, 'Grilled Caesar Side', 'Romaine Lettuce, Grilled Chicken, Caesar Dressing', 'Main', 13)
+       
     ]
     
     restaurant_postcodes = [
         # Postcodes for Bella Italia (res_id = 1)
         (1, 12345),
-        (1, 12346),
-        (1, 12347),
-        (1, 12348),
-        (1, 12349),
-        (1, 12350),
+        (1, 13579),
+        (1, 12468),
+        (1, 23456),
+        (1, 98765),
+        (1, 45057),
         (1, 12351),
-        (1, 12352),
+        (1, 56789),
         (1, 12353),
-        (1, 12354),
+        (1, 14567),
 
         # Postcodes for Taste of India (res_id = 2)
         (2, 56789),
-        (2, 56790),
+        (2, 47058),
         (2, 56791),
         (2, 56792),
-        (2, 56793),
+        (2, 54321),
         (2, 56794),
         (2, 56795),
         (2, 56796),
@@ -251,7 +205,7 @@ def initExampleDB():
         (3, 98770),
         (3, 98771),
         (3, 98772),
-        (3, 98773),
+        (3, 54321),
         (3, 98774),
 
         # Postcodes for Sushi Heaven (res_id = 4)
@@ -262,8 +216,8 @@ def initExampleDB():
         (4, 54325),
         (4, 54326),
         (4, 54327),
-        (4, 54328),
-        (4, 54329),
+        (4, 56789),
+        (4, 98765),
         (4, 54330),
 
         # Postcodes for Steakhouse Deluxe (res_id = 5)
@@ -272,14 +226,14 @@ def initExampleDB():
         (5, 13581),
         (5, 13582),
         (5, 13583),
-        (5, 13584),
-        (5, 13585),
+        (5, 54321),
+        (5, 56789),
         (5, 13586),
         (5, 13587),
-        (5, 13588),
+        (5, 98765),
 
         # Postcodes for Vegetarian Delights (res_id = 6)
-        (6, 24680),
+        (6, 13579),
         (6, 24681),
         (6, 24682),
         (6, 24683),
@@ -291,125 +245,124 @@ def initExampleDB():
         (6, 24689),
 
         # Postcodes for The Burger Joint (res_id = 7)
-        (7, 11111),
-        (7, 11112),
+        (7, 12345),
+        (7, 98765),
         (7, 11113),
         (7, 11114),
         (7, 11115),
-        (7, 11116),
+        (7, 54321),
         (7, 11117),
-        (7, 11118),
-        (7, 11119),
+        (7, 13579),
+        (7, 56789),
         (7, 11120),
 
         # Postcodes for Seafood Sensation (res_id = 8)
         (8, 22222),
-        (8, 22223),
+        (8, 54321),
         (8, 22224),
         (8, 22225),
         (8, 22226),
-        (8, 22227),
+        (8, 12345),
         (8, 22228),
-        (8, 22229),
+        (8, 98765),
         (8, 22230),
         (8, 22231),
 
         # Postcodes for Mexican Fiesta (res_id = 9)
         (9, 33333),
         (9, 33334),
-        (9, 33335),
+        (9, 54321),
         (9, 33336),
-        (9, 33337),
+        (9, 98765),
         (9, 33338),
         (9, 33339),
-        (9, 33340),
+        (9, 56789),
         (9, 33341),
         (9, 33342),
 
         # Postcodes for Noodle House (res_id = 10)
-        (10, 44444),
+        (10, 54321),
         (10, 44445),
-        (10, 44446),
+        (10, 13579),
         (10, 44447),
         (10, 44448),
         (10, 44449),
         (10, 44450),
         (10, 44451),
         (10, 44452),
-        (10, 44453),
+        (10, 12345),
 
-        # Postcodes for BBQ Grill Masters (res_id = 11)
-        (11, 55555),
-        (11, 55556),
-        (11, 55557),
-        (11, 55558),
-        (11, 55559),
-        (11, 55560),
-        (11, 55561),
-        (11, 55562),
-        (11, 55563),
-        (11, 55564),
 
         # Postcodes for Sweet Treats Bakery (res_id = 12)
-        (12, 66666),
-        (12, 66667),
-        (12, 66668),
-        (12, 66669),
-        (12, 66670),
-        (12, 66671),
-        (12, 66672),
-        (12, 66673),
-        (12, 66674),
-        (12, 66675),
+        (11, 98765),
+        (11, 66667),
+        (11, 56789),
+        (11, 66669),
+        (11, 66670),
+        (11, 13579),
+        (11, 66672),
+        (11, 66673),
+        (11, 54321),
+        (11, 66675),
 
         # Postcodes for Coffee Haven (res_id = 13)
-        (13, 77777),
-        (13, 77778),
-        (13, 77779),
-        (13, 77780),
-        (13, 77781),
-        (13, 77782),
-        (13, 77783),
-        (13, 77784),
-        (13, 77785),
-        (13, 77786),
+        (12, 98765),
+        (12, 77778),
+        (12, 77779),
+        (12, 56789),
+        (12, 77781),
+        (12, 12345),
+        (12, 77783),
+        (12, 77784),
+        (12, 54321),
+        (12, 54321),
 
-        # Postcodes for Thai Orchid (res_id = 14)
-        (14, 88888),
-        (14, 88889),
-        (14, 88890),
-        (14, 88891),
-        (14, 88892),
-        (14, 88893),
-        (14, 88894),
-        (14, 88895),
-        (14, 88896),
-        (14, 88897),
+    ]
+    orders = [
+    # Order 1 for Umut
+    ("2024-01-22 20:30", 1, 1, "Umut", "Karadeniz", "123 Main St", 'Margherita Pizza', "Delivered"),
 
-        # Postcodes for Gourmet Grill (res_id = 15)
-        (15, 10009),
-        (15, 10000),
-        (15, 10001),
-        (15, 10002),
-        (15, 10003),
-        (15, 10004),
-        (15, 10005),
-        (15, 10006),
-        (15, 10007),
-        (15, 10008)
+    # Order 2 for Umut
+    ("2024-01-23 19:45", 1, 1, "Umut", "Karadeniz", "123 Main St", 'Spaghetti Bolognese', "In Progress"),
+
+    # Order 1 for Alp
+    ("2024-01-24 18:15", 2, 2, "Okan", "Alp", "456 Oak St", 'Chicken Tikka Masala', "Pending"),
+
+    # Order 2 for Alp
+    ("2024-01-25 20:00", 2, 2, "Okan", "Alp", "456 Oak St", 'Chicken Korma', "Delivered"),
+
+    # Order 1 for Pelin
+    ("2024-01-22 17:30", 3, 3, "Pala", "Pelin", "789 Pine St", 'Chocolate Cannoli', "Delivered"),
+
+    # Order 2 for Pelin
+    ("2024-01-23 18:45", 3, 3, "Pala", "Pelin", "789 Pine St", 'Caesar Side', "In Progress"),
+
+    # Order 1 for Efe
+    ("2024-01-24 18:15", 5, 5, "Akdeniz", "Efe", "202 Maple St", 'Grilled Asparagus', "Pending"),
+
+    # Order 2 for Efe
+    ("2024-01-25 20:00", 5, 5, "Akdeniz", "Efe", "202 Maple St", 'Ribeye Steak', "Delivered"),
 ]
+
     
-    i=1
+
+        
+
+    i = 1  
     for customer in customers:
         DBfuncs.registerCustomer(customer[0], customer[1], customer[2], customer[3], customer[4], customer[5])
     for restaurant in restaurants:
         DBfuncs.registerRestaurant(restaurant[0], restaurant[1], restaurant[2], restaurant[3])
         DBfuncs.setTime(i, restaurant[4], restaurant[5])
-        i += 1
+        i += 1  
     for item in menu_items:
         DBfuncs.addNewItem(item[0], item[1], item[2], item[3], item[4])
     for postcode in restaurant_postcodes:
         DBfuncs.addNewPostcode(postcode[0], postcode[1])
+    for order in orders:
+        DBfuncs.addNewOrder(order[0], order[1], order[2], order[3], order[4], order[5], order[6])
+
+        
         
 if __name__ == "__main__":
     DBfuncs.createTables()

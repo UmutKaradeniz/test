@@ -8,13 +8,13 @@ class DBfuncs:
         con.execute("PRAGMA foreign_keys = ON")
         cur = con.cursor()
         cur.execute("""CREATE TABLE IF NOT EXISTS customers (
-                id INTEGER PRIMARY KEY autoincrement,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 surname TEXT NOT NULL,
                 name TEXT NOT NULL,
                 address TEXT NOT NULL,
                 postcode INTEGER NOT NULL,
                 username TEXT UNIQUE NOT NULL,
-                password TEXT NOT NULL                      
+                password TEXT NOT NULL
             )""")
         cur.execute("""CREATE TABLE IF NOT EXISTS restaurants (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -24,7 +24,7 @@ class DBfuncs:
                 password TEXT NOT NULL,
                 picture BLOB,
                 opening TIME,
-                closing TIME                          
+                closing TIME
             )""")
         cur.execute("""CREATE TABLE IF NOT EXISTS menu_items(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -33,7 +33,7 @@ class DBfuncs:
                 ingredients TEXT NOT NULL, 
                 type TEXT CHECK(TYPE IN('Main', 'Side', 'Dessert', 'Drink')) NOT NULL,
                 price INTEGER NOT NULL,
-                FOREIGN KEY(res_id) REFERENCES restaurants(id)       
+                FOREIGN KEY(res_id) REFERENCES restaurants(id)
             )""")
         cur.execute("""CREATE TABLE IF NOT EXISTS allowed_postcode(
                 res_id INTEGER NOT NULL,
@@ -44,16 +44,16 @@ class DBfuncs:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 date_Time DATETIME NOT NULL,
                 res_id INTEGER NOT NULL,
-                res_Name TEXT NOT NULL,
+                res_name TEXT NOT NULL,
                 cus_id INTEGER NOT NULL,
-                cus_Name TEXT NOT NULL,
-                cus_Surname TEXT NOT NULL,
-                cus_Address TEXT NOT NULL,  
+                cus_name TEXT NOT NULL,
+                cus_surname TEXT NOT NULL,
+                cus_address TEXT NOT NULL,  
                 order_info TEXT NOT NULL,
                 comment TEXT, 
                 status TEXT,
                 FOREIGN KEY(cus_id) REFERENCES customers(id),
-                FOREIGN KEY(res_id) REFERENCES restaurants(id)       
+                FOREIGN KEY(res_id) REFERENCES restaurants(id)
             )""")
         con.commit()
         con.close()
