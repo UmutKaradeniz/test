@@ -123,18 +123,28 @@ class DBfuncs:
             return False
         
     #Editing menu item frım Restaurant Menu
-    def editItem(item_id, name, ingredients, type, price):
+    def editItem(item_id, name, ingredients, type, price, filename):
         try:
             con = sql.connect('database.db')
             con.execute("PRAGMA foreign_keys = ON")
             cur = con.cursor() 
             cur.execute("""UPDATE menu_items SET name = (?), ingredients = (?),
-                        type = (?), price = (?) WHERE id= (?)""", (name, ingredients, type, price, item_id))
+                        type = (?), price = (?), picture = (?) WHERE id= (?)""", (name, ingredients, type, price, filename, item_id))
             con.commit()
             con.close()
         except sql.Error as Err:
             print("SQLite Error: ", Err)
-    
+
+    def retrieveFileName(item_id):
+        con = sql.connect('database.db')
+        con.execute("PRAGMA foreign_keys = ON")
+        cur = con.cursor() 
+        cur.execute("SELECT picture FROM menu_items WHERE id = (?)", (item_id, ))
+        data = cur.fetchone()[0]
+        con.commit()
+        con.close()
+        return data
+
     #returns id from the row of the given username
     def getIDRestaurant(username):
         con = sql.connect('database.db')

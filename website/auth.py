@@ -217,7 +217,15 @@ def edit_item():
                 description = request.form.get('itemdesc')
                 type = request.form.get('itemtype')
                 price = request.form.get('itemprice')
-                DBfuncs.editItem(item_id, name, description, type, price)
+                file = request.files['file']
+                if file.filename == '':
+                    filename = DBfuncs.retrieveFileName(item_id)
+                elif file and allowed_file(file.filename):
+                    os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], DBfuncs.retrieveFileName(item_id)))
+                    file.filename = str(uuid.uuid4()) + ".png"
+                    file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], file.filename))
+                    filename = file.filename
+                DBfuncs.editItem(item_id, name, description, type, price, filename)
                 flash("Edited item successfully!" , category = 'success')
                 return redirect(url_for('auth.restauranthome'))
             elif request.form["btn"] == "remove":
