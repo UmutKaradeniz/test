@@ -342,6 +342,12 @@ def initExampleDB():
 
     # Order 2 for Efe
     ("2024-01-25 20:00", 5, 'Steakhouse Deluxe',5, "Akdeniz", "Efe", '202 Maple St', 'Ribeye Steak', "Delivered"),
+
+    # Order 1 for Fadi
+    ("2024-01-24 18:15", 4, 'Sushi Heaven',4, 'Cheikh-el-Chabab', 'Fadi', "101 Elm St", 'Sashimi Platter', "Pending"),
+
+    # Order 2 for Fadi
+    ("2024-01-25 20:00", 4, 'Sushi Heaven',4, 'Cheikh-el-Chabab', 'Fadi', '101 Elm St', 'Spicy Tuna Roll', "Delivered"),
 ]
 
     
