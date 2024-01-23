@@ -127,7 +127,6 @@ def menu():
 def shopping_cart():
     if 'id' in session:
         menu_items= []
-        total = 0
         cus_id = session['id']
         for item_id in session['cart'][1:]:
             menu_items.append(DBfuncs.retrieveMenuItem(item_id))
