@@ -30,33 +30,6 @@
         <tbody>
             <form method = "POST">
             {% for order in orders  | sort(attribute='0', reverse=True) %}
-            {% if order[7] == order_status[0] %}
-                <tr style="white-space: pre-line;">
-                    <td> {{ order[1] }} </td>
-                    <td> {{ order[2] }} </td>
-                    <td> {{ order[3] }} </td>
-                    <td> {{ order[4] }} </td>
-                    <td> {{ order[5] }} </td>
-                    <td> {{ order[6] }} </td>
-                    <td> {{ order[7] }} </td>
-                    {% if order[7]==order_status[0] %}
-                        <td>
-                            <div class="row">
-                                <button type="submit" class="btn btn-outline-success" name="confirm" value="{{ order[0] }}">Confirm</button>&nbsp
-                                <button type="submit" class="btn btn-outline-danger" name="cancel" value="{{ order[0] }}">Cancel</button>
-                            </div>
-                        </td>
-                    {% elif order[7] == order_status[1]%}
-                        <td>
-                            <button type="submit" class="btn btn-primary" name="complete" value="{{ order[0] }}">Complete</button>
-                        </td>
-                    {% else %}
-                        <td></td>
-                    {% endif %}
-                </tr>
-            {% endif %}
-            {% endfor %}
-            {% for order in orders | sort(attribute='0', reverse=True) %}
             {% if order[7] == order_status[1] %}
                 <tr style="white-space: pre-line;">
                     <td> {{ order[1] }} </td>
@@ -66,20 +39,28 @@
                     <td> {{ order[5] }} </td>
                     <td> {{ order[6] }} </td>
                     <td> {{ order[7] }} </td>
-                    {% if order[7]==order_status[0] %}
-                        <td>
-                            <div class="row">
-                                <button type="submit" class="btn btn-outline-success" name="confirm" value="{{ order[0] }}">Confirm</button>&nbsp
-                                <button type="submit" class="btn btn-outline-danger" name="cancel" value="{{ order[0] }}">Cancel</button>
-                            </div>
-                        </td>
-                    {% elif order[7] == order_status[1]%}
-                        <td>
-                            <button type="submit" class="btn btn-primary" name="complete" value="{{ order[0] }}">Complete</button>
-                        </td>
-                    {% else %}
-                        <td></td>
-                    {% endif %}
+                    <td>
+                        <button type="submit" class="btn btn-primary" name="complete" value="{{ order[0] }}">Complete</button>
+                    </td>
+                </tr>
+            {% endif %}
+            {% endfor %}
+            {% for order in orders | sort(attribute='0', reverse=True) %}
+            {% if order[7] == order_status[0] %}
+                <tr style="white-space: pre-line;">
+                    <td> {{ order[1] }} </td>
+                    <td> {{ order[2] }} </td>
+                    <td> {{ order[3] }} </td>
+                    <td> {{ order[4] }} </td>
+                    <td> {{ order[5] }} </td>
+                    <td> {{ order[6] }} </td>
+                    <td> {{ order[7] }} </td>
+                    <td>
+                        <div class="row">
+                            <button type="submit" class="btn btn-outline-success" name="confirm" value="{{ order[0] }}">Confirm</button>&nbsp
+                            <button type="submit" class="btn btn-outline-danger" name="cancel" value="{{ order[0] }}">Cancel</button>
+                        </div>
+                    </td>
                 </tr>
             {% endif %}
             {% endfor %}
@@ -92,21 +73,8 @@
                     <td> {{ order[4] }} </td>
                     <td> {{ order[5] }} </td>
                     <td> {{ order[6] }} </td>
-                    <td> {{ order[7] }} </td>
-                    {% if order[7]==order_status[0] %}
-                        <td>
-                            <div class="row">
-                                <button type="submit" class="btn btn-outline-success" name="confirm" value="{{ order[0] }}">Confirm</button>&nbsp
-                                <button type="submit" class="btn btn-outline-danger" name="cancel" value="{{ order[0] }}">Cancel</button>
-                            </div>
-                        </td>
-                    {% elif order[7] == order_status[1]%}
-                        <td>
-                            <button type="submit" class="btn btn-primary" name="complete" value="{{ order[0] }}">Complete</button>
-                        </td>
-                    {% else %}
-                        <td></td>
-                    {% endif %}
+                    <td class="text-success"> {{ order[7] }} </td>
+                    <td></td>
                 </tr>
             {% endif %}
             {% endfor %}
@@ -119,21 +87,8 @@
                     <td> {{ order[4] }} </td>
                     <td> {{ order[5] }} </td>
                     <td> {{ order[6] }} </td>
-                    <td> {{ order[7] }} </td>
-                    {% if order[7]==order_status[0] %}
-                        <td>
-                            <div class="row">
-                                <button type="submit" class="btn btn-outline-success" name="confirm" value="{{ order[0] }}">Confirm</button>&nbsp
-                                <button type="submit" class="btn btn-outline-danger" name="cancel" value="{{ order[0] }}">Cancel</button>
-                            </div>
-                        </td>
-                    {% elif order[7] == order_status[1]%}
-                        <td>
-                            <button type="submit" class="btn btn-primary" name="complete" value="{{ order[0] }}">Complete</button>
-                        </td>
-                    {% else %}
-                        <td></td>
-                    {% endif %}
+                    <td class="text-danger"> {{ order[7] }} </td>
+                    <td></td>
                 </tr>
             {% endif %}
             {% endfor %}
