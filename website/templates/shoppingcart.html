@@ -22,7 +22,11 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-2">
-                                <img src="{{ url_for('static', filename=item[5]) }}" alt="Food Image" class="img-fluid">
+                                {% if item[5] == None %}
+                                    <img src="../static/default-food-picture.png" class="card-img-top" alt=" Food item name ">
+                                {% else %}
+                                    <img src="{{ url_for('static', filename=item[5]) }}" class="card-img-top" alt=" Food item name ">
+                                {% endif %}
                             </div>
                             <div class="col-md-6">
                                 <h5 class="card-title">{{ item[1] }}</h5>

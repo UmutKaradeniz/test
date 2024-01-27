@@ -74,7 +74,7 @@ class DBfuncs:
         return response
 
     #Restaurant registration to the DB
-    def registerRestaurant(res_name, address, postcode, password, filename):
+    def registerRestaurant(res_name, address, postcode, password, filename=None):
         con = sql.connect('database.db')
         cur = con.cursor()
         response = False
@@ -109,7 +109,7 @@ class DBfuncs:
         return True if bool(result) == True else False  
     
     #Adding menu item to Restaurant Menu
-    def addNewItem(res_id, name, ingredients, type, price, filename):
+    def addNewItem(res_id, name, ingredients, type, price, filename=None):
         try:
             con = sql.connect('database.db')
             con.execute("PRAGMA foreign_keys = ON")
@@ -123,7 +123,7 @@ class DBfuncs:
             return False
         
     #Editing menu item frım Restaurant Menu
-    def editItem(item_id, name, ingredients, type, price, filename):
+    def editItem(item_id, name, ingredients, type, price, filename=None):
         try:
             con = sql.connect('database.db')
             con.execute("PRAGMA foreign_keys = ON")

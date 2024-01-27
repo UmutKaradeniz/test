@@ -34,14 +34,18 @@
     }
 </style>
 
-{% set food_categories = ['Main', 'Side', 'Dessert', 'Drink'] %}
+{% set food_categories = [] %}
+
+{% for food_item in menu_items %}
+   <!-- {{ food_categories.append( food_item[3] ) }} -->
+{% endfor %}
 
 <!-- Bootstrap container for responsive layout -->
 <div class="container">
     <!-- Row to display category boxes -->
     <div class="row">
         <!-- Loop through food categories and create boxes -->
-        {% for category in food_categories %}
+        {% for category in food_categories | unique %}
             <div class="col-md-3">
                 <div class="category-box" onClick="document.getElementById('{{ category }}').scrollIntoView();">
                     <h4>{{ category|capitalize }}</h4>
@@ -51,25 +55,37 @@
     </div>
 </div>
 
-<!-- Food items sections -->
-{% for category in food_categories %}
+{% for category in food_categories | unique %}
 <div id="{{ category }}" class="food-section container mt-5">
   <h1 align="center">{{ category }}</h1>
   {% for food_item in menu_items %}
     {% if food_item[3] == category %}
-        <div class="card mb-3">
-            <img src="{{ url_for('static', filename=food_item[5]) }}" class="card-img-top" alt=" food_item.name " style="max-height: 80px; max-width: 80px;">
-            <div class="card-body">
-                <h5 class="card-title"> {{ food_item[1] }} </h5>
-                <p class="card-text"><strong>Allergens:</strong>  {{ food_item[2] }} </p>
-                <p class="card-text"><strong>Price:</strong> $ {{ food_item[4] }} </p>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2">
+                            {% if food_item[5] == None %}
+                                <img src= "../static/default-food-picture.png" alt="food_item.name" class="img-fluid">
+                            {% else %}
+                            <img src= "{{ url_for('static', filename=food_item[5]) }}" alt="food_item.name" class="img-fluid">
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="card-title"> {{ food_item[1] }} </h5>
+                            <p class="card-text"><strong>Allergens:</strong>  {{ food_item[2] }} </p>
+                            <p class="card-text"><strong>Price:</strong> $ {{ food_item[4] }} </p>
+                        </div>
+                        <div class="col-md-2">
+                            <form method="POST">
+                                <button type="submit" class="btn btn-primary btn-block edit-button float-right" data-toggle="modal" data-target="#editModal" name="btn" value="{{ food_item[0] }}">
+                                    Edit
+                                </button>
+                              </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-          <form method="POST">
-            <button type="submit" class="btn btn-primary btn-sm edit-button float-right" data-toggle="modal" data-target="#editModal" name="btn" value="{{ food_item[0] }}">
-                Edit
-            </button>
-          </form>
-        </div>
+
       {% endif %}
     {% endfor %}
 </div>
