@@ -14,7 +14,7 @@
 {% block content %}
 <div class="table-container mt-5 mx-5">
     {% set order_status = ['in process', 'in preparation', 'cancelled', 'completed'] %}
-    <table class="table" style="table-layout: auto; width: 100%;">
+    <table class="table table-striped table-bordered" style="table-layout: auto; width: 100%;">
         <thead>
             <tr>
                 <th>Date and Time</th>
@@ -55,9 +55,9 @@
                     <td> {{ order[5] }} </td>
                     <td> {{ order[6] }} </td>
                     <td> {{ order[7] }} </td>
-                    <td>
+                    <td style="white-space: nowrap;">
                         <div class="row">
-                            <button type="submit" class="btn btn-outline-success" name="confirm" value="{{ order[0] }}">Confirm</button>&nbsp
+                            &nbsp&nbsp<button type="submit" class="btn btn-outline-success" name="confirm" value="{{ order[0] }}">Confirm</button>&nbsp
                             <button type="submit" class="btn btn-outline-danger" name="cancel" value="{{ order[0] }}">Cancel</button>
                         </div>
                     </td>
