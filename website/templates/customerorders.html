@@ -11,6 +11,8 @@
 
 {% endblock%}
 
+{% set orderStates = ['in process', 'in preparation', 'cancelled', 'completed'] %}
+
 {% block content %}
 <div class="container mt-5">
     <table class="table">
@@ -24,7 +26,8 @@
             </tr>
         </thead>
         <tbody>
-            {% for order in orders %}
+            {% for order in orders | sort(attribute='0', reverse=True) %}
+                {% if order[4] == orderStates[0] %}
                 <tr style="white-space: pre-line;">
                     <td> {{ order[0] }} </td>
                     <td> {{ order[1] }} </td>
@@ -32,6 +35,40 @@
                     <td> {{ order[3] }} </td>
                     <td> {{ order[4] }} </td>
                 </tr>
+                {% endif %}
+            {% endfor %}
+            {% for order in orders | sort(attribute='0', reverse=True) %}
+                {% if order[4] == orderStates[1] %}
+                <tr style="white-space: pre-line;">
+                    <td> {{ order[0] }} </td>
+                    <td> {{ order[1] }} </td>
+                    <td> {{ order[2] }} </td>
+                    <td> {{ order[3] }} </td>
+                    <td> {{ order[4] }} </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+            {% for order in orders | sort(attribute='0', reverse=True) %}
+                {% if order[4] == orderStates[3] %}
+                <tr style="white-space: pre-line;">
+                    <td> {{ order[0] }} </td>
+                    <td> {{ order[1] }} </td>
+                    <td> {{ order[2] }} </td>
+                    <td> {{ order[3] }} </td>
+                    <td> {{ order[4] }} </td>
+                </tr>
+                {% endif %}
+            {% endfor %}
+            {% for order in orders | sort(attribute='0', reverse=True) %}
+                {% if order[4] == orderStates[2] %}
+                <tr style="white-space: pre-line;">
+                    <td> {{ order[0] }} </td>
+                    <td> {{ order[1] }} </td>
+                    <td> {{ order[2] }} </td>
+                    <td> {{ order[3] }} </td>
+                    <td> {{ order[4] }} </td>
+                </tr>
+                {% endif %}
             {% endfor %}
         </tbody>
     </table>
