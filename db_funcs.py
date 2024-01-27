@@ -74,7 +74,7 @@ class DBfuncs:
         return response
 
     #Restaurant registration to the DB
-    def registerRestaurant(res_name, address, postcode, password, filename=None):
+    def registerRestaurant(res_name, address, postcode, password, filename='default-restaurant-picture.png'):
         con = sql.connect('database.db')
         cur = con.cursor()
         response = False
@@ -109,7 +109,7 @@ class DBfuncs:
         return True if bool(result) == True else False  
     
     #Adding menu item to Restaurant Menu
-    def addNewItem(res_id, name, ingredients, type, price, filename=None):
+    def addNewItem(res_id, name, ingredients, type, price, filename='default-food-picture.png'):
         try:
             con = sql.connect('database.db')
             con.execute("PRAGMA foreign_keys = ON")
@@ -122,8 +122,8 @@ class DBfuncs:
             print("SQLite Error: ", Err)
             return False
         
-    #Editing menu item frım Restaurant Menu
-    def editItem(item_id, name, ingredients, type, price, filename=None):
+    #Editing menu item from Restaurant Menu
+    def editItem(item_id, name, ingredients, type, price, filename):
         try:
             con = sql.connect('database.db')
             con.execute("PRAGMA foreign_keys = ON")
