@@ -289,6 +289,39 @@ def initExampleDB():
         (11, 54321)
 ]
     
+    orders = [
+        # Order 1 for John
+        ("2024-01-22 20:30", 1,'Bella Italia', 1, "John", "Smith", "123 Main St", 'Margherita Pizza x1\nLimoncello x1\n', "call dont ring"),
+
+        # Order 2 for John
+        ("2024-01-23 19:45", 2, 'Taste of India',1, "John", "Smith", "123 Main St", 'Chicken Tikka Masala x4\nVegetable Biryani x2\n', "make it a bit spicy"),
+
+        # Order 1 for Alice
+        ("2024-01-24 18:15", 5, 'Steakhouse Deluxe',2, "Alice", "Johnson", "456 Oak St", 'Filet Mignon x2\nOld Fashioned x3\n', "hello examinor"),
+
+        # Order 2 for Alice
+        ("2024-01-25 20:00", 2, 'Taste of India',2, "Alice", "Johnson", "456 Oak St", 'Chicken Korma x4\nGulab Jamun x1\n', "this is an example comment"),
+
+        # Order 1 for Michael
+        ("2024-01-22 17:30", 3, 'Mamma Mia Pizzeria',3, "Michael", "Davis", "789 Pine St", 'Chocolate Cannoli x3\nAntipasto Platter x3\n', "Lorem ipsum dolor sit amet"),
+
+        # Order 2 for Michael
+        ("2024-01-23 18:45", 3, 'Mamma Mia Pizzeria',3, "Michael", "Davis", "789 Pine St", 'Caesar Side x1\nCalamari Fritti x1\n', "Duis at mi fringilla"),
+
+        # Order 1 for Sarah
+        ("2024-01-24 18:15", 5, 'Steakhouse Deluxe',4, "Sarah", "Miller", "101 Elm St", 'Grilled Asparagus x7\n', "ante ipsum primis"),
+
+        # Order 2 for Sarah
+        ("2024-01-25 20:00", 1,'Bella Italia',4, "Sarah", "Miller", '101 Elm St', 'Minestrone Soup x1\nTiramisu x2\n', "Morbi mollis diam"),
+
+        # Order 1 for David
+        ("2024-01-24 18:15", 4, 'Sushi Heaven',5, 'David', 'Wilson', "202 Maple St", 'Sashimi Platter x4\nSake x1\n', "bibendum nisi vitae"),
+
+        # Order 2 for David
+        ("2024-01-25 20:00", 4, 'Sushi Heaven',5, 'David', 'Wilson', '202 Maple St', 'Spicy Tuna Roll x8\nMiso Soup x999\n', "Phasellus commodo"),
+    ]
+
+    
     i=1
     for customer in customers:
         DBfuncs.registerCustomer(customer[0], customer[1], customer[2], customer[3], customer[4], customer[5])
@@ -300,6 +333,8 @@ def initExampleDB():
         DBfuncs.addNewItem(item[0], item[1], item[2], item[3], item[4])
     for postcode in restaurant_postcodes:
         DBfuncs.addNewPostcode(postcode[0], postcode[1])
+    for order in orders:
+        DBfuncs.addNewOrder(order[0], order[1], order[2], order[3], order[4], order[5], order[6], order[7], order[8])
         
 if __name__ == "__main__":
     DBfuncs.createTables()
