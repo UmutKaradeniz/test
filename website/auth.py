@@ -221,7 +221,8 @@ def edit_item():
                 if file.filename == '':
                     filename = DBfuncs.retrieveFileName(item_id)
                 elif file and allowed_file(file.filename):
-                    os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], DBfuncs.retrieveFileName(item_id)))
+                    if file.name is not 'default-food-picture.png':
+                        os.remove(os.path.join(current_app.config['UPLOAD_FOLDER'], DBfuncs.retrieveFileName(item_id)))
                     file.filename = str(uuid.uuid4()) + ".png"
                     file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], file.filename))
                     filename = file.filename
