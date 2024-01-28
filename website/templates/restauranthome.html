@@ -23,14 +23,9 @@
 
 {% block content %}
 <style>
-    .category-box {
-      cursor: pointer;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 20px;
-      margin: 10px;
-      width: 200px; 
-      height: 100px; 
+    th:hover {
+        cursor: pointer;
+        background-color:aliceblue
     }
 </style>
 
@@ -41,18 +36,21 @@
 {% endfor %}
 
 <!-- Bootstrap container for responsive layout -->
-<div class="container">
+<div class="table-container mt-5" align="center">
     <!-- Row to display category boxes -->
-    <div class="row">
+    <table class="table table-bordered" style="table-layout: fixed; width: 50%;">
         <!-- Loop through food categories and create boxes -->
-        {% for category in food_categories | unique %}
-            <div class="col-md-3">
-                <div class="category-box" onClick="document.getElementById('{{ category }}').scrollIntoView();">
-                    <h4>{{ category|capitalize }}</h4>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+            <thead>
+                <tr align="center">
+                    {% for category in food_categories | unique %}
+                    <th onClick="document.getElementById('{{ category }}').scrollIntoView();">
+                        <img src="../static/{{ category }}.png" alt="Food category {{category }} picture" class="img-fluid">
+                        <h4>{{ category|capitalize }}</h4>
+                    </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+    </table>
 </div>
 
 {% for category in food_categories | unique %}
