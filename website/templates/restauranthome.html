@@ -65,7 +65,7 @@
                             {% if food_item[5] == None %}
                                 <img src= "../static/default-food-picture.png" alt="food_item.name" class="img-fluid">
                             {% else %}
-                            <img src= "{{ url_for('static', filename=food_item[5]) }}" alt="food_item.name" class="img-fluid">
+                                <img src= "{{ url_for('static', filename=food_item[5]) }}" alt="food_item.name" class="img-fluid">
                             {% endif %}
                         </div>
                         <div class="col-md-6">

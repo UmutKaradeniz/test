@@ -25,9 +25,9 @@
         <div class="row no-gutters">
           <div class="col-md-4">
             {% if restaurant[4] == None %}
-              <img src= "../static/default-restaurant-picture.png" alt="Restaurant Name" class="img-fluid" style="max-height: 140px;">
+              <img src= "../static/default-restaurant-picture.png" alt="Restaurant Name" class="img-fluid" style="max-width: 180px;">
             {% else %}
-              <img src= "{{ url_for('static', filename=restaurant[4]) }}" alt="Restaurant Name" class="img-fluid" style="max-height: 140px;">
+              <img src= "{{ url_for('static', filename=restaurant[4]) }}" alt="Restaurant Name" class="img-fluid" style="max-width: 180px;">
             {% endif %}
           </div>
           <div class="col-md-8">
@@ -50,7 +50,11 @@
       <button class="card mb-3" name="btn" value="{{ restaurant[0] }}" style="width: 100%; height: 50%;">
         <div class="row no-gutters">
           <div class="col-md-4">
-            <img src= "{{ url_for('static', filename=restaurant[4]) }}" alt="Restaurant Name" class="img-fluid" style="max-height: 140px;">
+            {% if restaurant[4] == None %}
+              <img src= "../static/default-restaurant-picture.png" alt="Restaurant Name" class="img-fluid" style="max-width: 180px;">
+            {% else %}
+              <img src= "{{ url_for('static', filename=restaurant[4]) }}" alt="Restaurant Name" class="img-fluid" style="max-width: 180px;">
+            {% endif %}
           </div>
           <div class="col-md-8">
             <div class="card-body">

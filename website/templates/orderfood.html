@@ -43,7 +43,7 @@
                 <tr align="center">
                     {% for category in food_categories | unique %}
                     <th onClick="document.getElementById('{{ category }}').scrollIntoView();">
-                        <img src="../static/{{ category }}.png" alt="Food category {{category }} picture" class="img-fluid">
+                        <img src="../static/{{ category }}.png" alt="Food category {{category }} picture" class="img-fluid" style="max-height: 60px;">
                         <h4>{{ category|capitalize }}</h4>
                     </th>
                     {% endfor %}
