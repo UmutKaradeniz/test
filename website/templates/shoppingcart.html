@@ -11,13 +11,24 @@
 
 {% block content %}
 
+<style>
+    a.clickable {
+        color: blue;
+        text-decoration: underline;
+    }
+    a.clickable:hover {
+        cursor: pointer;
+        color: blue;
+    }
+</style>
+
 {% if menu_items == [] %}
 <div class="container mt-5">
     <div class="row">
         <div class="cold-md-8">
             <h2>List of Selected Items</h2>
             <br>
-            <a href="/customerhome">Shopping cart is empty. Please add items to continue.</a>
+            <a onclick="history.back()" class="clickable">Shopping cart is empty. Please add items to continue.</a>
         </div>
     </div>
 </div>
