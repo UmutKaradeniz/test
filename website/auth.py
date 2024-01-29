@@ -192,7 +192,7 @@ def add_item():
             price = request.form.get('itemprice')
             file = request.files['file']
             if file.filename == '':
-                filename = 'default-food-picture.png'
+                filename = type + ".png"
             elif file and allowed_file(file.filename):
                 file.filename = str(uuid.uuid4()) + ".png"
                 file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], file.filename).replace("\\", "/"))
