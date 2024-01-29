@@ -330,7 +330,10 @@ def initExampleDB():
         DBfuncs.setTime(i, restaurant[4], restaurant[5])
         i += 1
     for item in menu_items:
-        DBfuncs.addNewItem(item[0], item[1], item[2], item[3], item[4])
+        temp = list(item)
+        temp.append(item[3] + '.png')
+        item = tuple(temp)
+        DBfuncs.addNewItem(item[0], item[1], item[2], item[3], item[4], item[5])
     for postcode in restaurant_postcodes:
         DBfuncs.addNewPostcode(postcode[0], postcode[1])
     for order in orders:
