@@ -17,6 +17,6 @@ FEATURES
 
 4. Order Tracking: Users can view the status of their orders in real-time.
 
-5.Admin Panel: Admins can manage restaurants, menus, and order statuses.
+5. Admin Panel: Admins can manage restaurants, menus, and order statuses.
 
 LANGUAGES/FRAMEWORKS USED: HTML, Python and Flask for server-side logic, SQLite for database management.
