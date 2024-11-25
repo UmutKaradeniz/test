@@ -1,6 +1,7 @@
 Delivery Service Website Project
 
 Overview
+
 This project is a web-based application designed for a delivery service company, similar to "Lieferando." The application was developed as part of our university "University of Duisburg-Essen" coursework to 
 demonstrate proficiency in web development using HTML, Python, Flask, and SQLite.
 
